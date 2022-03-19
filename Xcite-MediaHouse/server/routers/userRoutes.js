@@ -13,10 +13,10 @@ const router = express.Router();
 // creating Routes
 
 // for user register
-router.route("/register").post(registerUser);
+router.route("/auth/register").post(registerUser);
 
 // for user login
-router.route("/login").post(userLogin);
+router.route("/auth/login").post(userLogin);
 
 
 module.exports = router;

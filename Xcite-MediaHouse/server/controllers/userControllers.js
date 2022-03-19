@@ -6,6 +6,7 @@ const generateToken = require("../middlewares/generateToken");
 const registerUser = asyncHandler(async (req, res) => {
     const { name, email, password} = req.body;
 
+
     const userExist = await User.findOne({ email });
     if (userExist) {
         res.status(404);
