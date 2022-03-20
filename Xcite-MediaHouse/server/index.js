@@ -20,12 +20,17 @@ app.use(express.json());
 
 // Importing routers
 const userRoutes = require("./routers/userRoutes");
-
+const tempBlogCreateRoutes = require('./routers/tempBlogCreateRoutes');
+const blogRoutes = require('./routers/blogRoutes');
 
 // for userRoutes
 app.use("/api/v1", userRoutes);
 
+// for create blogs
+app.use("/api/v1",tempBlogCreateRoutes);
 
+// for blogs
+app.use("/api/v1",blogRoutes);
 
 
 const PORT = process.env.PORT || 8080;
