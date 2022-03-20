@@ -3,7 +3,7 @@ const asyncHandler = require("express-async-handler");
 
 
 // Verify Token
-const verify = asyncHandler(async (req, res, next) => {
+const protected = asyncHandler(async (req, res, next) => {
     const token = req.body.token || req.query.token || req.headers["x-access-token"];
 
     if(!token) {
@@ -12,7 +12,14 @@ const verify = asyncHandler(async (req, res, next) => {
 
     try {
         const decoded = jwttoken.verify(token,process.env.JWT_KEY);
-        req.user =  decoded;
+        
+        if(decoded){
+            res.status(200).json({
+                success : true,
+                message : "User Is Authorized!"
+            })
+        }
+        
     } catch (error) {
         return res.status(401).send("Invalid Token");
     }
@@ -21,4 +28,4 @@ const verify = asyncHandler(async (req, res, next) => {
 });
 
 
-module.exports = verify
+module.exports = protected

@@ -4,30 +4,30 @@ const verifyToken = require("../middlewares/verifyToken");
 const router = express.Router();
 
 // Get all latest Blogs
-router.route("/blog/allBlogs").get(getAllBlogs);
+router.route("/blog/allBlogs").get(verifyToken,getAllBlogs);
 
 // Get all latest news blogs
-router.route("/blog/newBlogs").get(getAllNewsBlogs);
+router.route("/blog/newBlogs").get(verifyToken,getAllNewsBlogs);
 
 // Get all latest news blogs
-router.route("/blog/businessBlogs").get(getAllBusinessBlogs);
+router.route("/blog/businessBlogs").get(verifyToken,getAllBusinessBlogs);
 
 // Get all latest sociology blogs
-router.route("/blog/sociologyBlogs").get(getAllSociologyBlogs);
+router.route("/blog/sociologyBlogs").get(verifyToken,getAllSociologyBlogs);
 
 // Get all latest tech blogs
-router.route("/blog/techBlogs").get(getAllTechBlogs);
+router.route("/blog/techBlogs").get(verifyToken,getAllTechBlogs);
 
 // Get all latest economic blogs
-router.route("/blog/economicBlogs").get(getAllEconomicBlogs);
+router.route("/blog/economicBlogs").get(verifyToken,getAllEconomicBlogs);
 
 // Get all latest other blogs
-router.route("/blog/otherBlogs").get(getAllOtherBlogs);
+router.route("/blog/otherBlogs").get(verifyToken,getAllOtherBlogs);
 
 // get blog by blog id
-router.route("/blog/:id").get(getBlogById);
+router.route("/blog/:id").get(verifyToken,getBlogById);
 
 // get all lastest blog of joun by id
-router.route("/joun/blog/:id").get(getAllBlogsOfJounById);
+router.route("/joun/blog/:id").get(verifyToken,getAllBlogsOfJounById);
 
 module.exports = router;

@@ -22,6 +22,7 @@ app.use(express.json());
 const userRoutes = require("./routers/userRoutes");
 const tempBlogCreateRoutes = require('./routers/tempBlogCreateRoutes');
 const blogRoutes = require('./routers/blogRoutes');
+const protectRoutes = require('./routers/protectRoutes');
 
 // for userRoutes
 app.use("/api/v1", userRoutes);
@@ -31,6 +32,9 @@ app.use("/api/v1",tempBlogCreateRoutes);
 
 // for blogs
 app.use("/api/v1",blogRoutes);
+
+// for protected routes
+app.use("/api/v1",protectRoutes);
 
 
 const PORT = process.env.PORT || 8080;
