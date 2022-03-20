@@ -20,21 +20,25 @@ app.use(express.json());
 
 // Importing routers
 const userRoutes = require("./routers/userRoutes");
-const tempBlogCreateRoutes = require('./routers/tempBlogCreateRoutes');
+const blogCreateRoutes = require('./routers/createBlogRoutes');
 const blogRoutes = require('./routers/blogRoutes');
 const protectRoutes = require('./routers/protectRoutes');
+const jounRoutes = require('./routers/jounRoutes')
 
 // for userRoutes
 app.use("/api/v1", userRoutes);
 
 // for create blogs
-app.use("/api/v1",tempBlogCreateRoutes);
+app.use("/api/v1",blogCreateRoutes);
 
 // for blogs
 app.use("/api/v1",blogRoutes);
 
 // for protected routes
 app.use("/api/v1",protectRoutes);
+
+//for journalist routes
+app.use("/api/v2",jounRoutes) 
 
 
 const PORT = process.env.PORT || 8080;

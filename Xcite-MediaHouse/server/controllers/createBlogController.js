@@ -3,9 +3,9 @@ const Blog = require("../models/blogModel");
 
 // create blog
 const createBlog = asyncHandler(async (req, res) => {
-    const {userId,title,type,tags,image,description,body} = req.body;
+    const {jounId,title,type,tags,image,description,body} = req.body;
     await Blog.create({
-        userId,
+        jounId,
         title,
         type,
         tags,
