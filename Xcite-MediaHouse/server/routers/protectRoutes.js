@@ -1,8 +1,8 @@
 const express = require("express");
-const protectedRoutes = require("../middlewares/protectedRoutes");
+const { protected } = require("../middlewares/protectedRoutes");
 const router = express.Router();
 
 // Check Is Route Is Protected
-router.route("/route/authorized").get(protectedRoutes);
+router.route("/route/authorized").get(protected);
 
 module.exports = router;

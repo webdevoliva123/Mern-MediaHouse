@@ -39,7 +39,13 @@ const jounSchema = new mongoose.Schema({
             type : Boolean,
             default : false,
             requried : true
-        }
+        },
+        subscribe : [
+            {
+                type : String,
+            }
+        ],
+
 })
 
 const jounModel = new mongoose.model("Journalist",jounSchema);

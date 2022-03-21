@@ -2,6 +2,8 @@ const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
 const generateToken = require("../middlewares/generateToken");
 const bycrpt = require("bcryptjs");
+const Blog = require("../models/blogModel");
+const jounModel = require("../models/jounModel");
 
 
 // User Register
@@ -154,4 +156,98 @@ const updateUserPassword = asyncHandler(async (req,res) => {
     }
 })
 
-module.exports = { registerUser, userLogin, updateUserAavatar, updateUserName , updateUserEmail, updateUserPassword};
+// User Like Blog
+const userLikeBlog = asyncHandler(async (req,res) => {
+    const {blogId,userId} = req.body;
+
+    const user = await User.findById(userId);
+
+    if(user){
+        const blog = await Blog.findById(blogId)
+        const likesData = blog.likes;
+        const alreadyLiked = likesData.filter((e) => {
+            if(e === userId){
+                return e
+            }
+        })
+
+       const isAlreadyLiked = alreadyLiked.length <= 0 ? true : false;
+        if(isAlreadyLiked){
+            await Blog.updateOne({_id : blogId},{$push : {likes : userId}})
+        .then(() => {
+            res.status(200).json({
+                success : true,
+                message : "Blog found & liked",
+            })
+
+        }).catch(() => {
+            return res.status(400).json({
+                success : false,
+                error : "Blog not found",
+            })
+        })
+        }else{
+            return res.status(400).json({
+                success : false,
+                error : "User Already like this blog",
+            })
+        }
+
+    }else{
+        return res.status(404).json({
+            success : false,
+            error : "User is aunthorized"
+        })
+    }
+})
+
+
+// User Remove Like Blog
+const userRemoveLikeFromBlog = asyncHandler(async (req,res) => {
+    const {blogId,userId} = req.body;
+
+    const user = await User.findById(userId);
+
+    if(user){
+        const blog = await Blog.findById(blogId)
+        const likesData = blog.likes;
+        const alreadyRemoveLiked = likesData.filter((e) => {
+            if(e === userId){
+                return e
+            }
+        })
+
+       const isAlreadyRemoveLiked = alreadyRemoveLiked.length > 0 ? true : false;
+        if(isAlreadyRemoveLiked){
+            await Blog.updateOne({_id : blogId},{$pull : {likes : userId}})
+        .then(() => {
+            res.status(200).json({
+                success : true,
+                message : "Blog found & removeLiked",
+            })
+
+        }).catch(() => {
+            return res.status(400).json({
+                success : false,
+                error : "Blog not found",
+            })
+        })
+        }else{
+            return res.status(400).json({
+                success : false,
+                error : "no user found in like section",
+            })
+        }
+
+    }else{
+        return res.status(404).json({
+            success : false,
+            error : "User is aunthorized"
+        })
+    }
+})
+
+
+
+
+module.exports = { registerUser, userLogin, updateUserAavatar, updateUserName , updateUserEmail, updateUserPassword , userLikeBlog, userRemoveLikeFromBlog};

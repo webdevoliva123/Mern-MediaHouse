@@ -3,11 +3,12 @@ const express = require("express");
 const {
     registerUser,
     userLogin,
-    updateAavatar,
     updateUserAavatar,
     updateUserName,
     updateUserEmail,
-    updateUserPassword
+    updateUserPassword,
+    userLikeBlog,
+    userRemoveLikeFromBlog,
 } = require("../controllers/userControllers");
 
 const verifyToken = require('../middlewares/verifyToken');
@@ -34,6 +35,12 @@ router.route("/user/update/email").put(verifyToken,updateUserEmail);
 
 // for update user password
 router.route("/user/update/password").put(verifyToken,updateUserPassword);
+
+// for like blog by user
+router.route("/user/blog/like").post(verifyToken,userLikeBlog);
+
+// for remove like from blog by user
+router.route("/user/blog/removeLike").post(verifyToken,userRemoveLikeFromBlog);
 
 
 module.exports = router;
