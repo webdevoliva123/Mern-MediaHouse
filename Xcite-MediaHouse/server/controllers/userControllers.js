@@ -3,7 +3,7 @@ const User = require("../models/userModel");
 const generateToken = require("../middlewares/generateToken");
 const bycrpt = require("bcryptjs");
 const Blog = require("../models/blogModel");
-const jounModel = require("../models/jounModel");
+const Journalist = require("../models/jounModel");
 
 
 // User Register
@@ -13,8 +13,10 @@ const registerUser = asyncHandler(async (req, res) => {
 
     const userExist = await User.findOne({ email });
     if (userExist) {
-        res.status(404);
-        throw new Error("User already exists");
+       return res.status(401).json({
+           success : false,
+           error : "User Already Register"
+       })
     } else {
 
         const user = await User.create({
@@ -28,10 +30,7 @@ const registerUser = asyncHandler(async (req, res) => {
                 user
             });
            
-        } else {
-            res.status(404);
-            throw new Error("User not created");
-        }
+        } 
     }
 });
 
@@ -49,8 +48,10 @@ const userLogin = asyncHandler(async (req, res) => {
             token: generateToken(user._id),
         });
     } else {
-        res.status(404);
-        throw new Error("Invalid email or password.");
+        return res.status(401).json({
+            success : false,
+            error : "Invalid email or password"
+        })
     }
 });
 
@@ -180,6 +181,8 @@ const userLikeBlog = asyncHandler(async (req,res) => {
                 message : "Blog found & liked",
             })
 
+            Blog.save();
+
         }).catch(() => {
             return res.status(400).json({
                 success : false,
@@ -226,6 +229,8 @@ const userRemoveLikeFromBlog = asyncHandler(async (req,res) => {
                 message : "Blog found & removeLiked",
             })
 
+            Blog.save();
+
         }).catch(() => {
             return res.status(400).json({
                 success : false,
@@ -247,7 +252,105 @@ const userRemoveLikeFromBlog = asyncHandler(async (req,res) => {
     }
 })
 
+// Subscribe To Jurnalist
+const subscribeToJoun = asyncHandler(async (req,res) => {
+    const {jounId,userId} = req.body;
+
+    const user = await User.findById(userId);
+
+    if(user){
+        const journalist = await Journalist.findById(jounId);
+        const subscribeData = journalist.subscribe;
+
+        const alreadySubscribe = subscribeData.filter((e) => {
+            if(e === userId){
+                return e
+            }
+        })
+
+        const isAlreadySubscribe = alreadySubscribe.length <= 0 ? true : false;
+
+        if(isAlreadySubscribe){
+            await Journalist.updateOne({_id : jounId},{$push : {subscribe : userId}}).then(() => {
+                res.status(200).json({
+                    success : true,
+                    message : "Joun found & subscribed",
+                })
+    
+                Journalist.save();
+    
+            }).catch(() => {
+                return res.status(400).json({
+                    success : false,
+                    error : "Joun not found",
+                })
+            })
+
+            
+        }else{
+            return res.status(400).json({
+                success : false,
+                error : "user already subscribe to this joun",
+            })
+        }
+
+        
+    }else{
+        return res.status(404).json({
+            success : false,
+            error : "User is aunthorized"
+        })
+    }   
+
+})
+
+// Unsubscribe To Jurnalist
+const unSubscribeToJun = asyncHandler(async (req,res) => {
+    const {jounId,userId} = req.body;
+
+    const user = await User.findById(userId);
+
+    if(user){
+        const journalist = await Journalist.findById(jounId);
+        const subscribeData = journalist.subscribe;
+
+        const alreadySubscribe = subscribeData.filter((e) => {
+            if(e === userId){
+                return e
+            }
+        })
+
+       const isAlreadyUnsubscribe = alreadySubscribe.length > 0 ? true : false;
+        if(isAlreadyUnsubscribe){
+            await Journalist.updateOne({_id : jounId},{$pull : {subscribe : userId}})
+        .then(() => {
+            res.status(200).json({
+                success : true,
+                message : "Joun found & unsubscribe",
+            })
+
+            Journalist.save();
+
+        }).catch(() => {
+            return res.status(400).json({
+                success : false,
+                error : "Joun not found",
+            })
+        })
+        }else{
+            return res.status(400).json({
+                success : false,
+                error : "joun is already unsubscribe",
+            })
+        }
+
+    }else{
+        return res.status(404).json({
+            success : false,
+            error : "User is aunthorized"
+        })
+    }
+})
 
 
-
-module.exports = { registerUser, userLogin, updateUserAavatar, updateUserName , updateUserEmail, updateUserPassword , userLikeBlog, userRemoveLikeFromBlog};
+module.exports = { registerUser, userLogin, updateUserAavatar, updateUserName , updateUserEmail, updateUserPassword , userLikeBlog, userRemoveLikeFromBlog ,subscribeToJoun , unSubscribeToJun};

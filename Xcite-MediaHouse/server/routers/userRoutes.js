@@ -9,6 +9,8 @@ const {
     updateUserPassword,
     userLikeBlog,
     userRemoveLikeFromBlog,
+    subscribeToJoun,
+    unSubscribeToJun,
 } = require("../controllers/userControllers");
 
 const verifyToken = require('../middlewares/verifyToken');
@@ -41,6 +43,12 @@ router.route("/user/blog/like").post(verifyToken,userLikeBlog);
 
 // for remove like from blog by user
 router.route("/user/blog/removeLike").post(verifyToken,userRemoveLikeFromBlog);
+
+// for subscribe to joun by user
+router.route("/user/cont/subscribe").post(verifyToken,subscribeToJoun);
+
+// for unsubscribe to joun by user
+router.route("/user/cont/unsubscribe").post(verifyToken,unSubscribeToJun);
 
 
 module.exports = router;

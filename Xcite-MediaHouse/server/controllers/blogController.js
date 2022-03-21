@@ -18,7 +18,7 @@ const getBlogByTag = asyncHandler(async (req,res) => {
             data: latestBlog,
         });
     } else {
-        res.status(404).json({
+        return res.status(404).json({
             success: false,
             error: "No Blog found",
         });
@@ -45,7 +45,7 @@ const get4LatestBlogs = asyncHandler(async (req, res) => {
     } else {
         res.status(200).json({
             success: false,
-            data: "No Blog found",
+            error: "No Blog found",
         });
     }
 });
@@ -61,10 +61,14 @@ const get4LatestNewsBlogs = asyncHandler(async (req, res) => {
         }
 
     if (Blogs.length > 0) {
-        res.status(200).json(latestBlog);
+        res.status(200).json({
+            success : true,
+            data : latestBlog
+        });
     } else {
-        res.status(404).json({
-            message: "No News Blog found",
+        return res.status(404).json({
+            success: false,
+            error: "No Blog found",
         });
     }
 });
@@ -81,10 +85,14 @@ const get4LatestBusinessBlogs = asyncHandler(async (req, res) => {
         }
 
     if (Blogs.length > 0) {
-        res.status(200).json(latestBlog);
+        res.status(200).json({
+            success : true,
+            data : latestBlog
+        });
     } else {
-        res.status(404).json({
-            message: "No News Blog found",
+        return res.status(404).json({
+            success: false,
+            error: "No Blog found",
         });
     }
 });
@@ -101,10 +109,14 @@ const get4LatestSociologyBlogs = asyncHandler(async (req, res) => {
         }
 
     if (Blogs.length > 0) {
-        res.status(200).json(latestBlog);
+        res.status(200).json({
+            success : true,
+            data : latestBlog
+        });
     } else {
-        res.status(404).json({
-            message: "No News Blog found",
+        return res.status(404).json({
+            success: false,
+            error: "No Blog found",
         });
     }
 });
@@ -121,10 +133,14 @@ const get4LatestTechBlogs = asyncHandler(async (req, res) => {
         }
 
     if (Blogs.length > 0) {
-        res.status(200).json(latestBlog);
+        res.status(200).json({
+            success : true,
+            data : latestBlog
+        });
     } else {
-        res.status(404).json({
-            message: "No News Blog found",
+        return res.status(404).json({
+            success: false,
+            error: "No Blog found",
         });
     }
 });
@@ -140,10 +156,14 @@ const get4LatestEconomicBlogs = asyncHandler(async (req, res) => {
         }
 
     if (Blogs.length > 0) {
-        res.status(200).json(latestBlog);
+        res.status(200).json({
+            success : true,
+            data : latestBlog
+        });
     } else {
-        res.status(404).json({
-            message: "No News Blog found",
+        return res.status(404).json({
+            success: false,
+            error: "No Blog found",
         });
     }
 });
@@ -159,10 +179,14 @@ const get4LatestOtherBlogs = asyncHandler(async (req, res) => {
         }
 
     if (Blogs.length > 0) {
-        res.status(200).json(latestBlog);
+        res.status(200).json({
+            success : true,
+            data : latestBlog
+        });
     } else {
-        res.status(404).json({
-            message: "No News Blog found",
+        return res.status(404).json({
+            success: false,
+            error: "No Blog found",
         });
     }
 });
@@ -186,9 +210,9 @@ const getAllBlogs = asyncHandler(async (req, res) => {
         });
 
     } else {
-        res.status(200).json({
+        return res.status(200).json({
             success: false,
-            data: "No Blog found",
+            error: "No Blog found",
         });
     }
 });
@@ -204,10 +228,14 @@ const getAllNewsBlogs = asyncHandler(async (req, res) => {
         }
 
     if (Blogs.length > 0) {
-        res.status(200).json(latestBlog);
+        res.status(200).json({
+            success : true,
+            data : latestBlog
+        });
     } else {
-        res.status(404).json({
-            message: "No News Blog found",
+        return res.status(404).json({
+            success: false,
+            error: "No Blog found",
         });
     }
 });
@@ -224,10 +252,14 @@ const getAllBusinessBlogs = asyncHandler(async (req, res) => {
         }
 
     if (Blogs.length > 0) {
-        res.status(200).json(latestBlog);
+        res.status(200).json({
+            success : true,
+            data : latestBlog
+        });
     } else {
-        res.status(404).json({
-            message: "No Business Blog found",
+        return res.status(404).json({
+            success: false,
+            error: "No Blog found",
         });
     }
 });
@@ -243,10 +275,14 @@ const getAllSociologyBlogs = asyncHandler(async (req, res) => {
         }
 
     if (Blogs.length > 0) {
-        res.status(200).json(latestBlog);
+        res.status(200).json({
+            success : true,
+            data : latestBlog
+        });
     } else {
-        res.status(404).json({
-            message: "No Sociology Blog found",
+        return res.status(404).json({
+            success: false,
+            error: "No Blog found",
         });
     }
 });
@@ -262,10 +298,14 @@ const getAllTechBlogs = asyncHandler(async (req, res) => {
     }
 
     if (Blogs.length > 0) {
-        res.status(200).json(latestBlog);
+        res.status(200).json({
+            success : true,
+            data : latestBlog
+        });
     } else {
-        res.status(404).json({
-            message: "No Tech Blog found",
+        return res.status(404).json({
+            success: false,
+            error: "No Blog found",
         });
     }
 });
@@ -282,10 +322,14 @@ const getAllEconomicBlogs = asyncHandler(async (req, res) => {
     }
 
     if (Blogs.length > 0) {
-        res.status(200).json(latestBlog);
+        res.status(200).json({
+            success : true,
+            data : latestBlog
+        });
     } else {
-        res.status(404).json({
-            message: "No Economic Blog found",
+        return res.status(404).json({
+            success: false,
+            error: "No Blog found",
         });
     }
 });
@@ -301,10 +345,14 @@ const getAllOtherBlogs = asyncHandler(async (req, res) => {
     }
 
     if (Blogs.length > 0) {
-        res.status(200).json(latestBlog);
+        res.status(200).json({
+            success : true,
+            data : latestBlog
+        });
     } else {
-        res.status(404).json({
-            message: "No Other Blog found",
+        return res.status(404).json({
+            success: false,
+            error: "No Blog found",
         });
     }
 });
@@ -318,7 +366,7 @@ const getBlogById = asyncHandler(async (req, res) => {
             data: foundBlog,
         });
     } else {
-        res.status(404).json({
+        return res.status(404).json({
             success: false,
             error: "No Blog found",
         });
@@ -341,7 +389,7 @@ const getAllBlogsOfJounById = asyncHandler(async (req, res) => {
             data: latestBlog,
         });
     } else {
-        res.status(404).json({
+        return res.status(404).json({
             success: false,
             error: "No Blog found",
         });
