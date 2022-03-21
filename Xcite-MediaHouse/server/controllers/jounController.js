@@ -226,10 +226,58 @@ const getAllBlogsOfJounById = asyncHandler(async (req, res) => {
     }
 });
 
-// // Update Blog Of Joun
-// const updateBlogOfJoun = () => {
-//     const {jounId,blogId,title,description}
-// }
+// Update Blog Of Joun
+const updateBlogOfJounByJoun = asyncHandler(async(req,res) => {
+    const {jounId,blogId,currentPassword,title,description,body,tags,type} = req.body;
+
+    const journalist = await Journalist.findById(jounId);
+
+    if(journalist.isjournalist){
+        const blog = await Blog.findById(blogId);
+        if(blog.jounId.toString() === jounId){
+            const passwordMatched = await bycrpt.compare(currentPassword,journalist.password);
+            if(passwordMatched){
+                if(title){
+                    await Blog.findByIdAndUpdate(blogId,{title});
+                }
+
+                if(description){
+                    await Blog.findByIdAndUpdate(blogId,{description});
+                }
+
+                if(body){
+                    await Blog.findByIdAndUpdate(blogId,{body});
+                }
+
+                if(tags) {
+                    await Blog.findByIdAndUpdate(blogId,{tags});
+                }
+
+                if(type) {
+                    await Blog.findByIdAndUpdate(blogId,{type});
+                }
 
 
-module.exports = { jounRegister, jounLogin, updateJounName , updateJounAvatar , getJounByName , updateJounEmail , updateJounPassword , getAllBlogsOfJounById}
+                res.status(200).json({
+                    success : true,
+                    message : "Blog Edited !"
+                })
+                
+            }else{
+                return res.status(404).json({
+                    success: false,
+                    error: "Joun is not authorized!",
+                });
+            }
+        }
+    }else{
+        return res.status(404).json({
+            success: false,
+            error: "Joun is not authorized!",
+        });
+    }
+
+})
+
+
+module.exports = { jounRegister, jounLogin, updateJounName , updateJounAvatar , getJounByName , updateJounEmail , updateJounPassword , getAllBlogsOfJounById, updateBlogOfJounByJoun}

@@ -1,5 +1,5 @@
 const express = require("express");
-const { jounRegister, jounLogin, updateJounName, getJounByName, updateJounEmail, updateJounAvatar, updateJounPassword, getAllBlogsOfJounById } = require("../controllers/jounController");
+const { jounRegister, jounLogin, updateJounName, getJounByName, updateJounEmail, updateJounAvatar, updateJounPassword, getAllBlogsOfJounById, updateBlogOfJounByJoun } = require("../controllers/jounController");
 const { protectedForJoun } = require("../middlewares/protectedRoutes");
 const verifyToken = require("../middlewares/verifyToken");
 const router = express.Router();
@@ -21,6 +21,9 @@ router.route("/joun/update/email").put(protectedForJoun,updateJounEmail);
 
 // For Update Name Of Journalist
 router.route("/joun/update/password").put(protectedForJoun,updateJounPassword);
+
+// For Update Blog Of Journalist
+router.route("/joun/update/blog").put(protectedForJoun,updateBlogOfJounByJoun);
 
 // For Finding Journalist By Name
 router.route("/joun/search/:search").get(verifyToken,getJounByName);
