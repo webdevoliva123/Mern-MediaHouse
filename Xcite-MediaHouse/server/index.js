@@ -23,7 +23,8 @@ const userRoutes = require("./routers/userRoutes");
 const blogCreateRoutes = require('./routers/createBlogRoutes');
 const blogRoutes = require('./routers/blogRoutes');
 const protectRoutes = require('./routers/protectRoutes');
-const jounRoutes = require('./routers/jounRoutes')
+const jounRoutes = require('./routers/jounRoutes');
+const adminRoutes = require('./routers/adminRoutes')
 
 // for userRoutes
 app.use("/api/v1", userRoutes);
@@ -38,7 +39,10 @@ app.use("/api/v1",blogRoutes);
 app.use("/api/v1",protectRoutes);
 
 //for journalist routes
-app.use("/api/v2",jounRoutes) 
+app.use("/api/v2",jounRoutes);
+
+// for admin routes
+app.use("/api/v3",adminRoutes);
 
 
 const PORT = process.env.PORT || 8080;

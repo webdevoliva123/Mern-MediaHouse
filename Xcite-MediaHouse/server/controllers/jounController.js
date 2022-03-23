@@ -3,6 +3,7 @@ const Journalist = require('../models/jounModel');
 const bycrpt = require('bcryptjs');
 const generateToken = require("../middlewares/generateToken");
 const Blog = require("../models/blogModel");
+const e = require("cors");
 
 
 // Journalist Register
@@ -280,4 +281,88 @@ const updateBlogOfJounByJoun = asyncHandler(async(req,res) => {
 })
 
 
-module.exports = { jounRegister, jounLogin, updateJounName , updateJounAvatar , getJounByName , updateJounEmail , updateJounPassword , getAllBlogsOfJounById, updateBlogOfJounByJoun}
+// Get Total No. Of Jurnalist Blog
+const totalBlogOfJoun = asyncHandler(async (req,res) => {
+    const {jounId} = req.body;
+
+    const journalist = await Journalist.findById(jounId);
+
+    if(journalist){
+        const jounBlog = await Blog.find({jounId});
+
+        res.status(200).json({
+            success : true,
+            message : jounBlog.length
+        })
+    }else{
+        return res.status(404).json({
+            success : false,
+            error : "Joun Not Found"
+        })
+    }
+
+})
+
+// Get Total No. Of Jurnalist Blog
+const totalLikeOfJoun = asyncHandler(async (req,res) => {
+    const {jounId} = req.body;
+
+    const journalist = await Journalist.findById(jounId);
+
+    if(journalist){
+        const jounBlog = await Blog.find({jounId});
+        let totalLike = 0;
+
+        jounBlog.map((e) => {
+            totalLike += e.likes.length
+        })
+
+        res.status(200).json({
+            success : true,
+            message : totalLike
+        })
+        
+    }else{
+        return res.status(404).json({
+            success : false,
+            error : "Joun Not Found"
+        })
+    }
+
+})
+
+// Get Total No. Of Jurnalist Blog
+const totalSubsOfJoun = asyncHandler(async (req,res) => {
+    const {jounId} = req.body;
+
+    const journalist = await Journalist.findById(jounId);
+
+    if(journalist){
+        res.status(200).json({
+            success : true,
+            message : journalist.subscribe.length
+        })
+        
+    }else{
+        return res.status(404).json({
+            success : false,
+            error : "Joun Not Found"
+        })
+    }
+
+})
+
+module.exports = { 
+    jounRegister, 
+    jounLogin, 
+    updateJounName , 
+    updateJounAvatar , 
+    getJounByName , 
+    updateJounEmail , 
+    updateJounPassword , 
+    getAllBlogsOfJounById, 
+    updateBlogOfJounByJoun, 
+    totalBlogOfJoun,
+    totalLikeOfJoun,
+    totalSubsOfJoun
+}
