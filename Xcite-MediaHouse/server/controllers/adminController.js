@@ -1,4 +1,5 @@
 const asyncHandler = require('express-async-handler');
+const nodeMailSender = require('../middlewares/mailSender');
 const Blog = require('../models/blogModel');
 const Journalist = require('../models/jounModel');
 const User = require('../models/userModel');
@@ -14,6 +15,24 @@ const acceptJournalist = asyncHandler(  async (req,res) => {
                 success : true,
                 message : "Journalist Is Accepted As Confirmed Journalist"
             })
+
+            const get_html_message = (userName) => {
+                return `
+                    <p>Dear, <b>${userName}</b></p>
+                    </br>
+                    <p>Congratulation! You got selected for Journalist Role In Mern-MediaHouse.</p>
+                    <p>Now, You can create your blogs on Mern-MediaHouse</p>
+                    </br>
+                    </br>
+                    <a href="http://localhost:8080/api/v2/auth/journalist/login" target="_blank"><button style="padding:10px 30px; border:none; outline: none; cursor: pointer; border-radius: 2px; background:crimson; color:#fff;">Login</button></a>
+                    </br>
+                    </br>
+                    </br>
+                    <h2>Thank You</h3>
+                 `
+            }
+           
+            nodeMailSender(journalist.email,"Mern-MediaHouse : Congratulation, You Got Selected.",get_html_message(journalist.name))
         }else{
             res.status(200).json({
                 success : true,
@@ -33,11 +52,30 @@ const acceptJournalist = asyncHandler(  async (req,res) => {
 const rejectJournalist = asyncHandler(  async (req,res) => {
     const journalist = await Journalist.findById(req.params.id);
     if(journalist){
-        await Journalist.remove({_id: req.params.id}).then(() => {
-            res.status(200).json({
-                success : true,
-                message : "Journalist Got Rjeceted"
-            })
+        
+
+            const get_html_message = (userName) => {
+                return `
+                    <p>Dear, <b>${userName}</b></p>
+                    </br>
+                    <p>Sorry! We are sorry You not selected for journalist role in Mern-MediaHouse.</p>
+                    <p>You Can Try Again, Make Your Resume Strong.</p>
+                    </br>
+                    </br>
+                    <a href="http://localhost:8080/api/v2/auth/journalist/register" target="_blank"><button style="padding:10px 30px; border:none; outline: none; cursor: pointer; border-radius: 2px; background:crimson; color:#fff;">Login</button></a>
+                    </br>
+                    </br>
+                    </br>
+                    <h2>Thank You</h3>
+                 `
+            }
+           
+            nodeMailSender(journalist.email,"Mern-MediaHouse : Sorry, You Are Not Selected.",get_html_message(journalist.name));
+            await Journalist.deleteOne({_id: req.params.id}).then(() => {
+                res.status(200).json({
+                    success : true,
+                    message : "Journalist Got Rjeceted"
+                })
         }).catch(() => {
             return res.status(404).json({
                 success : true,

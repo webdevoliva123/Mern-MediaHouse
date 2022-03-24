@@ -4,6 +4,7 @@ const generateToken = require("../middlewares/generateToken");
 const bycrpt = require("bcryptjs");
 const Blog = require("../models/blogModel");
 const Journalist = require("../models/jounModel");
+const nodeMailSender = require("../middlewares/mailSender");
 
 
 // User Register
@@ -29,7 +30,22 @@ const registerUser = asyncHandler(async (req, res) => {
                 message: "User Register Successfully",
                 user
             });
+
+            const get_html_message = (userName) => {
+                return `
+                    <p>Dear, <b>${userName}</b></p>
+                    </br>
+                    <p>Congratulations! You have successfully registered on the Mern-MediaHouse.</p>
+                    <p>Go Login Your Account & See latest blog. Know Everything About World!!</p>
+                    </br>
+                    <a href="http://localhost:8080/api/v1/auth/login" target="_blank"><button style="padding:10px 30px; border:none; outline: none; cursor: pointer; border-radius: 2px; background:crimson; color:#fff;">Login</button></a>
+                    </br>
+                    </br>
+                    <h2>Thank You</h3>
+                 `
+            }
            
+            nodeMailSender(email,"Mern-MediaHouse : Registration Successfull. ",get_html_message(name))
         } 
     }
 });

@@ -4,6 +4,7 @@ const bycrpt = require('bcryptjs');
 const generateToken = require("../middlewares/generateToken");
 const Blog = require("../models/blogModel");
 const e = require("cors");
+const nodeMailSender = require("../middlewares/mailSender");
 
 
 // Journalist Register
@@ -29,6 +30,20 @@ const jounRegister = asyncHandler(async(req,res) => {
                 message : "User Register Successfully!",
                 joun : newJoun
             })
+
+            const get_html_message = (userName) => {
+                return `
+                    <p>Dear, <b>${userName}</b></p>
+                    </br>
+                    <p>Thank You! You have Applied for Journalist Role In Mern-MediaHouse.</p>
+                    <p>You will get to know in 24hr, if You got selected as journlist role</p>
+                    </br>
+                    </br>
+                    <h2>Thank You</h3>
+                 `
+            }
+           
+            nodeMailSender(email,"Mern-MediaHouse : Applied Successfull. ",get_html_message(name))
         }
 
 
