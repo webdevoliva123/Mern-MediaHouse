@@ -3,8 +3,8 @@ const Journalist = require('../models/jounModel');
 const bycrpt = require('bcryptjs');
 const generateToken = require("../middlewares/generateToken");
 const Blog = require("../models/blogModel");
-const e = require("cors");
 const nodeMailSender = require("../middlewares/mailSender");
+const JWT = require('jsonwebtoken')
 
 
 // Journalist Register
@@ -367,6 +367,110 @@ const totalSubsOfJoun = asyncHandler(async (req,res) => {
 
 })
 
+// Forget Password Of Journalist
+const forgetPasswordJoun = asyncHandler(async (req,res,next) => {
+    const {email} = req.body
+
+    const journalist = await Journalist.findOne({email});
+
+    if(journalist){
+        // genrate one time link
+        const secreteKey = process.env.JWT_KEY + journalist.password;
+        // create payload
+        const payload = {
+            email : journalist.email,
+            id : journalist.id
+        }
+        // genarate token
+        const token = JWT.sign(payload,secreteKey,{expiresIn : '15m'});
+        // genarte link
+        const link = `http://localhost:8080/api/v2/joun/resetPassword/${journalist.id}/${token}`
+
+        const get_html_message = (userName) => {
+            return `
+                <p>Dear, <b>${userName}</b></p>
+                </br>
+                <p>Your Password Recovery Link Successfully Ganerate : </p>
+                <p>${link}</p>
+                <h2>Thank You</h3>
+             `
+        }
+        
+        nodeMailSender(email,"Mern-MediaHouse : Password Recovery Link.",get_html_message(journalist.name));
+
+        res.status(200).json({
+            success : true,
+            message : "Your Recovery Link Send on Your Email Id"
+        })
+
+    }else{
+        return res.status(404).json({
+            success : false,
+            error : `User Not Register`
+        })
+    }
+
+})
+
+// recovery page auth of journalist
+const authForResetPassPageJoun = asyncHandler(async  (req,res) => {
+    const {id,token} = req.body;
+
+    const journalist = await Journalist.findById(id);
+
+    if(journalist){
+        const secert = process.env.JWT_KEY + journalist.password
+        
+        const userAuth =  JWT.verify(token,secert);
+        
+
+        if(userAuth){
+            res.status(200).json({
+                success : true,
+                message : 'User Authorized'
+            })
+        }else{
+            return res.status(200).json({
+                success: false,
+                error : 'User UnAuthorized'
+            })
+        }
+
+    }else{
+        res.send(`User Aunthorized`)
+    }
+})
+
+// Reset Password
+const resetPasswordJoun = asyncHandler(async (req,res) => {
+    const {id,token} = req.params;
+    const {newPassword} = req.body;
+    const journalist = await Journalist.findById(id);
+
+    if(journalist){
+        const secert = process.env.JWT_KEY + journalist.password
+        
+        const userAuth =  JWT.verify(token,secert);
+
+        if(userAuth){
+            const hashedPassword = await bycrpt.hash(newPassword,5);
+           const updatePassword =  await Journalist.findByIdAndUpdate(id,{$set : {password : hashedPassword}});
+            res.status(200).json({
+                success : true,
+                message : `Password Has Update to : ${updatePassword}`
+            })
+        }else{
+            return res.status(200).json({
+                success: false,
+                error : 'User UnAuthorized'
+            })
+        }
+
+    }else{
+        res.send(`User Aunthorized`)
+    }
+})
+
 module.exports = { 
     jounRegister, 
     jounLogin, 
@@ -379,5 +483,8 @@ module.exports = {
     updateBlogOfJounByJoun, 
     totalBlogOfJoun,
     totalLikeOfJoun,
-    totalSubsOfJoun
+    totalSubsOfJoun,
+    forgetPasswordJoun,
+    authForResetPassPageJoun,
+    resetPasswordJoun
 }

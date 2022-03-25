@@ -5,6 +5,8 @@ const bycrpt = require("bcryptjs");
 const Blog = require("../models/blogModel");
 const Journalist = require("../models/jounModel");
 const nodeMailSender = require("../middlewares/mailSender");
+const JWT = require('jsonwebtoken');
+const { get } = require("../routers/userRoutes");
 
 
 // User Register
@@ -71,6 +73,109 @@ const userLogin = asyncHandler(async (req, res) => {
     }
 });
 
+// Forget Password
+const forgetPasswordUser = asyncHandler(async (req,res,next) => {
+    const {email} = req.body
+
+    const user = await User.findOne({email});
+
+    if(user){
+        // genrate one time link
+        const secreteKey = process.env.JWT_KEY + user.password;
+        // create payload
+        const payload = {
+            email : user.email,
+            id : user.id
+        }
+        // genarate token
+        const token = JWT.sign(payload,secreteKey,{expiresIn : '15m'});
+        // genarte link
+        const link = `http://localhost:8080/api/v1/user/resetPassword/${user.id}/${token}`
+
+        const get_html_message = (userName) => {
+            return `
+                <p>Dear, <b>${userName}</b></p>
+                </br>
+                <p>Your Password Recovery Link Successfully Ganerate : </p>
+                <p>${link}</p>
+                <h2>Thank You</h3>
+             `
+        }
+        
+        nodeMailSender(email,"Mern-MediaHouse : Password Recovery Link.",get_html_message(user.name));
+
+        res.status(200).json({
+            success : true,
+            message : "Your Recovery Link Send on Your Email Id"
+        })
+
+    }else{
+        return res.status(404).json({
+            success : false,
+            error : `User Not Register`
+        })
+    }
+
+})
+
+// recovery page auth
+const authForResetPassPage = asyncHandler(async  (req,res) => {
+    const {id,token} = req.body;
+
+    const user = await User.findById(id);
+
+    if(user){
+        const secert = process.env.JWT_KEY + user.password
+        
+        const userAuth =  JWT.verify(token,secert);
+        
+
+        if(userAuth){
+            res.status(200).json({
+                success : true,
+                message : 'User Authorized'
+            })
+        }else{
+            return res.status(200).json({
+                success: false,
+                error : 'User UnAuthorized'
+            })
+        }
+
+    }else{
+        res.send(`User Aunthorized`)
+    }
+})
+
+// Reset Password
+const resetPassword = asyncHandler(async (req,res) => {
+    const {id,token} = req.params;
+    const {newPassword} = req.body;
+    const user = await User.findById(id);
+
+    if(user){
+        const secert = process.env.JWT_KEY + user.password
+        
+        const userAuth =  JWT.verify(token,secert);
+
+        if(userAuth){
+            const hashedPassword = await bycrpt.hash(newPassword,5);
+           const updatePassword =  await User.findByIdAndUpdate(id,{$set : {password : hashedPassword}});
+            res.status(200).json({
+                success : true,
+                message : `Password Has Update to : ${updatePassword}`
+            })
+        }else{
+            return res.status(200).json({
+                success: false,
+                error : 'User UnAuthorized'
+            })
+        }
+
+    }else{
+        res.send(`User Aunthorized`)
+    }
+})
 
 // Update User Avatar
 const updateUserAavatar = asyncHandler(async (req,res) => {
@@ -369,4 +474,16 @@ const unSubscribeToJun = asyncHandler(async (req,res) => {
 })
 
 
-module.exports = { registerUser, userLogin, updateUserAavatar, updateUserName , updateUserEmail, updateUserPassword , userLikeBlog, userRemoveLikeFromBlog ,subscribeToJoun , unSubscribeToJun};
+module.exports = { registerUser,
+     userLogin,
+     updateUserAavatar,
+     updateUserName ,
+     updateUserEmail,
+     updateUserPassword ,
+     userLikeBlog,
+     userRemoveLikeFromBlog ,subscribeToJoun ,
+     unSubscribeToJun,
+     forgetPasswordUser,
+     authForResetPassPage,
+     resetPassword
+    };

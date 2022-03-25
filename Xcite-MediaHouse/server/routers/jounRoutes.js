@@ -1,5 +1,5 @@
 const express = require("express");
-const { jounRegister, jounLogin, updateJounName, getJounByName, updateJounEmail, updateJounAvatar, updateJounPassword, getAllBlogsOfJounById, updateBlogOfJounByJoun, totalBlogOfJoun, totalLikeOfJoun, totalSubsOfJoun } = require("../controllers/jounController");
+const { jounRegister, jounLogin, updateJounName, getJounByName, updateJounEmail, updateJounAvatar, updateJounPassword, getAllBlogsOfJounById, updateBlogOfJounByJoun, totalBlogOfJoun, totalLikeOfJoun, totalSubsOfJoun, forgetPasswordJoun, authForResetPassPageJoun, resetPasswordJoun } = require("../controllers/jounController");
 const { protectedForJoun } = require("../middlewares/protectedRoutes");
 const verifyToken = require("../middlewares/verifyToken");
 const router = express.Router();
@@ -39,6 +39,16 @@ router.route("/joun/blog/totalLike").get(protectedForJoun,totalLikeOfJoun);
 
 // For Getting Total Subs. Like of Joun.
 router.route("/joun/totalSubs").get(protectedForJoun,totalSubsOfJoun);
+
+// Forget Password
+router.route("/joun/forgetPassword").post(forgetPasswordJoun);
+
+// for auth for resest password page of joun
+router.route("/joun/auth/resetPassword").post(authForResetPassPageJoun);
+
+// for reset Password
+router.route("/joun/resetPassword/:id/:token").post(resetPasswordJoun);
+
 
 
 

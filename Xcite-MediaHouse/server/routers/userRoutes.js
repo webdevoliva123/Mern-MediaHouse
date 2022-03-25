@@ -11,6 +11,9 @@ const {
     userRemoveLikeFromBlog,
     subscribeToJoun,
     unSubscribeToJun,
+    forgetPasswordUser,
+    authForResetPassPage,
+    resetPassword,
 } = require("../controllers/userControllers");
 
 const verifyToken = require('../middlewares/verifyToken');
@@ -49,6 +52,15 @@ router.route("/user/cont/subscribe").post(verifyToken,subscribeToJoun);
 
 // for unsubscribe to joun by user
 router.route("/user/cont/unsubscribe").post(verifyToken,unSubscribeToJun);
+
+//for forget password of user
+router.route("/user/forgetPassword").post(forgetPasswordUser);
+
+// for auth for resest password page
+router.route("/user/auth/resetPassword").post(authForResetPassPage);
+
+// for reset Password
+router.route("/user/resetPassword/:id/:token").post(resetPassword);
 
 
 module.exports = router;
