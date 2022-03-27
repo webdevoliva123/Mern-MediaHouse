@@ -7,6 +7,8 @@ import { getSetToken, getUserInfo } from '../../redux/action/userAction';
 const Logout = () => {
     const dispatch = useDispatch();
     const navigate =  useNavigate();
+    
+    //On Logout Func. 
     const onLogout = () => {
         dispatch(getSetToken(''));
         dispatch(getUserInfo({}))

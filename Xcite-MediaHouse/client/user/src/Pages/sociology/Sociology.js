@@ -1,13 +1,12 @@
 import React from 'react'
 import AfterLogin from '../../components/navbar/afterLogin/AfterLogin'
-
-const Profile = () => {
+const Sociology = () => {
   return (
     <>
-    <AfterLogin />
-    <div>profile</div>
+        <AfterLogin />
+        <div>Sociology</div>
     </>
   )
 }
 
-export default Profile
+export default Sociology

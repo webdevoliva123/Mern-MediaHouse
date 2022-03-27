@@ -5,20 +5,31 @@ import SignUp from './Pages/signUp/SignUp';
 import SignIn from './Pages/signIn/SignIn';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getIsUserAuth, getSetToken } from './redux/action/userAction';
+import { getIsUserAuth, getSetToken, getUserInfo } from './redux/action/userAction';
 import axios from 'axios';
 import NotFound from './Pages/error/NotFound';
 import Logout from './Pages/Logout/Logout';
 import BeforeHome from './Pages/home/BeforeHome';
 import AfterHome from './Pages/home/AfterHome';
+import Profile from './Pages/profile/Profile';
+import UserAccount from './Pages/userAccount/UserAccount';
+import UserDashboard from './Pages/userDashboard/UserDashboard';
+import Business from './Pages/business/Business';
+import Sociology from './Pages/sociology/Sociology';
+import Tech from './Pages/tech/Tech';
+import Economic from './Pages/economic/Economic';
+import Others from './Pages/others/Others';
+import ForgetPassword from './Pages/forgetPassword/ForgetPassword';
 
 
 function App() {
   const dispatch = useDispatch();
   const token = localStorage.getItem('token');
+  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
   const navigate = useNavigate();
 
     dispatch(getSetToken(token));
+    dispatch(getUserInfo(userInfo))
 
     useEffect(async () =>{
       await axios({
@@ -47,7 +58,16 @@ function App() {
           <Route exact path='/' element={<BeforeHome />}/>
           <Route exact path='/signUp' element={!authUser ? <SignUp /> : <NotFound />} />
           <Route exact path='/signIn' element={!authUser ? <SignIn /> : <NotFound />} />
+          <Route exact path='/forgetPassword' element={!authUser ? <ForgetPassword /> : <NotFound />} />
           <Route exact path='/home' element={authUser ? <AfterHome />  : <NotFound />}/>
+          <Route exact path='/business' element={authUser ? <Business />  : <NotFound />}/>
+          <Route exact path='/sociology' element={authUser ? <Sociology />  : <NotFound />}/>
+          <Route exact path='/tech' element={authUser ? <Tech />  : <NotFound />}/>
+          <Route exact path='/economic' element={authUser ? <Economic />  : <NotFound />}/>
+          <Route exact path='/others' element={authUser ? <Others />  : <NotFound />}/>
+          <Route exact path='/profile' element={authUser ? <Profile />  : <NotFound />}/>
+          <Route exact path='/account' element={authUser ? <UserAccount />  : <NotFound />}/>
+          <Route exact path='/dashboard' element={authUser ? <UserDashboard />  : <NotFound />}/>
           <Route exact path='/logout' element={authUser ? <Logout />  : <NotFound />}/>
         </Routes>
         <Footer />

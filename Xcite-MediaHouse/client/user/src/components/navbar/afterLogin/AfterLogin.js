@@ -15,7 +15,7 @@ import { useSelector } from 'react-redux';
 
 const pages = [
     {pageName:'Home',pageLink:"/home"}, {pageName:'Business',pageLink:"/business"},{pageName:'Sociology',pageLink:"/sociology"},{pageName:'Tech',pageLink:"/tech"},{pageName:"Economic",pageLink:"/economic"},{pageName:"Others",pageLink:"/others"}];
-const settings = [{pageName:'profile',pageLink:"/profile"},{pageName:"Account",pageLink:"/account"},{pageName:"Dashboard",pageLink:"dashboard"},{pageName:"Logout",pageLink:"/logout"}];
+const settings = [{pageName:'profile',pageLink:"/profile"},{pageName:"Account",pageLink:"/account"},{pageName:"Dashboard",pageLink:"/dashboard"},{pageName:"Logout",pageLink:"/logout"}];
 
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -36,10 +36,8 @@ const ResponsiveAppBar = () => {
     setAnchorElUser(null);
   };
 
-  // Getting User Avatar From Localstorage
-  const userData = JSON.parse(localStorage.getItem("userInfo"));
-  const userAvatar = userData.avatar;
-
+  // Getting User Avatar From Redux
+  const userAvatar = useSelector((state) =>  state.userInfo.userInfoInitial.avatar);
   return (
     <AppBar position="static" style={{background:"#272727"}}>
       <Container maxWidth="xl">

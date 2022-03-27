@@ -102,7 +102,7 @@ const SignIn = () => {
       dispatch(getError(error))
       dispatch(getIsUserAuth(false));
       dispatch(getSuccess(''));
-      toast.error("User Unauthorized.");
+      toast.error("Invalid Email or Password");
     })
   }
   
