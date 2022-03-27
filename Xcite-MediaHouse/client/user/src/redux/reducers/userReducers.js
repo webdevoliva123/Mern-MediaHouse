@@ -26,6 +26,17 @@ const userAuth = (state = userAuthInitial,{type,payload}) => {
 }
 
 
+export const userInfo = (state = { userInfoInitial : {}}, {type,payload}) => {
+    switch(type){
+        case actionType.USER_INFO:
+            localStorage.setItem("userInfo",JSON.stringify(payload))
+            return ({userInfoInitial : payload})
+        default :
+            return state;
+    }
+}
+
+
 
 
 export {

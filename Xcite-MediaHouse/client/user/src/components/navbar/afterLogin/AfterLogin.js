@@ -1,79 +1,145 @@
-import { useState } from 'react'
+import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import { styled, alpha } from '@mui/material/styles';
-import SearchIcon from '@mui/icons-material/Search';
-import InputBase from '@mui/material/InputBase';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import Container from '@mui/material/Container';
+import Avatar from '@mui/material/Avatar';
+import Tooltip from '@mui/material/Tooltip';
+import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
-function AfterLogin() {
-    const SearchIconWrapper = styled('div')(({ theme }) => ({
-        padding: theme.spacing(0, 2),
-        height: '100%',
-        position: 'absolute',
-        pointerEvents: 'none',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    }));
+import { useSelector } from 'react-redux';
 
-  
+const pages = [
+    {pageName:'Home',pageLink:"/home"}, {pageName:'Business',pageLink:"/business"},{pageName:'Sociology',pageLink:"/sociology"},{pageName:'Tech',pageLink:"/tech"},{pageName:"Economic",pageLink:"/economic"},{pageName:"Others",pageLink:"/others"}];
+const settings = [{pageName:'profile',pageLink:"/profile"},{pageName:"Account",pageLink:"/account"},{pageName:"Dashboard",pageLink:"dashboard"},{pageName:"Logout",pageLink:"/logout"}];
 
-    const Search = styled('div')(({ theme }) => ({
-        position: 'relative',
-        borderRadius: theme.shape.borderRadius,
-        backgroundColor: alpha(theme.palette.common.white, 0.15),
-        '&:hover': {
-          backgroundColor: alpha(theme.palette.common.white, 0.25),
-        },
-        marginLeft: 0,
-        width: '100%',
-        [theme.breakpoints.up('sm')]: {
-          marginLeft: theme.spacing(1),
-          width: 'auto',
-        },
-      }));
-      
-      const StyledInputBase = styled(InputBase)(({ theme }) => ({
-        color: 'inherit',
-        '& .MuiInputBase-input': {
-          padding: theme.spacing(1, 1, 1, 0),
-          // vertical padding + font size from searchIcon
-          paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-          transition: theme.transitions.create('width'),
-          width: '100%',
-          [theme.breakpoints.up('sm')]: {
-            width: '12ch',
-            '&:focus': {
-              width: '20ch',
-            },
-          },
-        },
-      }));
-    return (
-        <>
-            <Box sx={{ flexGrow: 1 }}>
-                <AppBar position="static" style={{ background: '#272727' }}>
-                    <Toolbar>
-                        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} style={{color:"var(--white)" }}>
-                            MediaHouse
-                        </Typography>
-                        <Link to={"/logout"}>Logout</Link>
-                        <Search style={{ background:"var(--white)" }}>
-                            <SearchIconWrapper>
-                                <SearchIcon />
-                            </SearchIconWrapper>
-                            <StyledInputBase
-                                placeholder="Search…"
-                                inputProps={{ 'aria-label': 'search' }}
-                            />
-                        </Search>
-                    </Toolbar>
-                </AppBar>
-            </Box>
-        </>
-    )
-}
+const ResponsiveAppBar = () => {
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-export default AfterLogin
+  const handleOpenNavMenu = (event) => {
+    setAnchorElNav(event.currentTarget);
+  };
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
+  // Getting User Avatar From Localstorage
+  const userData = JSON.parse(localStorage.getItem("userInfo"));
+  const userAvatar = userData.avatar;
+
+  return (
+    <AppBar position="static" style={{background:"#272727"}}>
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
+          >
+            MediaHouse
+          </Typography>
+
+          <Box sx={{ flexGrow: 2, display: { xs: 'flex', md: 'none' } }}>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
+              color="inherit"
+            >
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{
+                display: { xs: 'block', md: 'none' },
+              }}
+            >
+              {React.Children.toArray(pages.map((page) => (
+                <MenuItem  onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">{page.pageName}</Typography>
+                </MenuItem>
+              )))}
+            </Menu>
+          </Box>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
+          >
+            LOGO
+          </Typography>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex',justifyContent:"flex-end",marginRight:"20px" }}}>
+            {React.Children.toArray(pages.map((page) => (
+             <Link to={page.pageLink}> <Typography
+             onClick={handleCloseNavMenu}
+             sx={{ my: 2, color: 'white', display: 'block',margin:"0 10px"}}
+           >
+             {page.pageName}
+           </Typography></Link>
+            )))}
+          </Box>
+
+          <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar alt="Remy Sharp" src={userAvatar} />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              {React.Children.toArray(settings.map((setting) => (
+                <MenuItem onClick={handleCloseUserMenu} >
+                  <Link to={setting.pageLink}><Typography textAlign="center">{setting.pageName}</Typography></Link>
+                </MenuItem>
+              )))}
+            </Menu>
+          </Box>
+        </Toolbar>
+      </Container>
+    </AppBar>
+  );
+};
+export default ResponsiveAppBar;

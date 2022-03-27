@@ -2,14 +2,15 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import AfterLogin from '../../components/navbar/afterLogin/AfterLogin';
-import { getSetToken } from '../../redux/action/userAction';
+import { getSetToken, getUserInfo } from '../../redux/action/userAction';
 
 const Logout = () => {
     const dispatch = useDispatch();
     const navigate =  useNavigate();
     const onLogout = () => {
         dispatch(getSetToken(''));
-        localStorage.removeItem('token');
+        dispatch(getUserInfo({}))
+        localStorage.clear();
         navigate('/');
         window.location.reload();
     }

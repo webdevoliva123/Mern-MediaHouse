@@ -6,11 +6,16 @@ import {
   TextField,
   Button,
   Typography,
-  Link,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
 import axios from 'axios';
 import BeforeLogin from "../../components/navbar/beforeLogin/BeforeLogin";
+import { useNavigate,Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import {toast} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
+toast.configure();
 
 const comStyles = makeStyles({
   image: {
@@ -49,6 +54,7 @@ const comStyles = makeStyles({
 });
 const SignUp = () => {
   const classes = comStyles();
+  const navigate = useNavigate();
   const [userData,setUserData] = useState({
     firstName : "",
     lastName : "",
@@ -56,29 +62,50 @@ const SignUp = () => {
     password : ""
   })
 
+  
+
   const submit = async() => {
-    
-    const body = JSON.stringify({
-      "name" : userData.firstName + userData.lastName,
-      "email" : userData.email,
-      "password" : userData.password
-  })
+      if(userData.firstName.length < 3 || userData.firstName.length > 20){
+        return toast.warning('First Name Must Be Grater Than 4 Char.');
+      }
+      
+      if(userData.lastName.length < 3 || userData.lastName.length > 20){
+        return toast.warning('Last Name Must Be Grater Than 4 Char.');
+      }
 
-    await axios({
-      method : "POST",
-      url : "http://localhost:8080/api/v1/auth/register",
-      headers : {
-        "Content-Type" : "application/json"
-      },
-      data : body
-    }).then((response) => {
-      console.log(response);
-    }).catch((error) => {
-      console.log(error);
-    })
+      const emailRegEx = /[a-zA-Z0-9._%+-]+@[a-z0-9._]+\.[a-z]{2,8}(.[a-z{2,8}])?/g
+      if(!emailRegEx.test(userData.email)){
+        return toast.warning("Invalid Email.");
+      }
+
+      const passRegEx = /^[A-Za-z]\w{7,14}$/;
+      if(!passRegEx.test(userData.password)){
+          return toast.warning("Password Must have Grater Than * Char. And have atleast one number, one uppercase and one lowercase letter")
+      }
+
+
+        const body = JSON.stringify({
+          "name" : userData.firstName + " " + userData.lastName,
+          "email" : userData.email,
+          "password" : userData.password
+        })
+        
+        // User Register API
+        await axios({
+          method : "POST",
+          url : "http://localhost:8080/api/v1/auth/register",
+          headers : {
+            "Content-Type" : "application/json"
+          },
+          data : body
+        }).then(() => {
+          toast.success("User Register Successfully!")
+          navigate('/signIn')
+        }).catch(() => {
+          toast.error("Internal Server Error")
+        })
   }
-
-
+   
   return (
     <>
     <BeforeLogin />
@@ -174,7 +201,7 @@ const SignUp = () => {
           </div>
           <Typography>
             Do you have an account? 
-            <Link href="/signIn" className={classes.textField} style={{paddingLeft:"5px"}}>
+            <Link to={'/signIn'} className={classes.textField} style={{paddingLeft:"5px"}}>
               Login
             </Link>
           </Typography>

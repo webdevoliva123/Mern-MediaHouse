@@ -41,6 +41,11 @@ li{
   list-style: none;
 }
 
+/* body */
+body{
+  overflow-x: hidden;
+}
+
 /* Pre-Defines Classes */
 .center-row{
   display: flex;
@@ -156,6 +161,17 @@ li{
   width: 250px;
   font-family: var(--family-Roboto);
   color: var(--white);
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+}
+
+.call-to-action p{
+  margin-right: 20px;
+}
+
+.call-to-action Button:hover{
+  background: crimson;
 }
 
 .mh-cc {

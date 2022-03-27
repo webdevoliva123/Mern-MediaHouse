@@ -32,7 +32,7 @@ function Footer() {
                     <InstagramIcon sx={{marginRight: '10px', color: '#20b2aa', cursor: 'pointer'}}/>
                     <GitHubIcon sx={{color: '#20b2aa', cursor: 'pointer'}}/>
                 </div>
-                <div className='call-to-action center-column'>
+                <div className='call-to-action'>
                     <p>Register as</p>
                     <Button sx={{background: '#dc143c',padding:"10px 10px"}} variant="contained">Journalist</Button>
                 </div>

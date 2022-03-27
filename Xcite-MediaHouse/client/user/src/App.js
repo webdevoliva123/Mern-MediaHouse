@@ -1,18 +1,17 @@
 import './App.css';
 import {Route, Routes, useNavigate} from 'react-router-dom'
 import Footer from './components/footer/Footer';
-import Home from './Pages/home/BeforeHome';
 import SignUp from './Pages/signUp/SignUp';
 import SignIn from './Pages/signIn/SignIn';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getIsUserAuth, getSetToken, getSuccess } from './redux/action/userAction';
+import { getIsUserAuth, getSetToken } from './redux/action/userAction';
 import axios from 'axios';
 import NotFound from './Pages/error/NotFound';
-import { userAuth } from './redux/reducers/userReducers';
 import Logout from './Pages/Logout/Logout';
 import BeforeHome from './Pages/home/BeforeHome';
 import AfterHome from './Pages/home/AfterHome';
+
 
 function App() {
   const dispatch = useDispatch();
@@ -43,7 +42,7 @@ function App() {
 
   return (
     <>
-        <div className="container">
+        <div className="container" >
         <Routes>
           <Route exact path='/' element={<BeforeHome />}/>
           <Route exact path='/signUp' element={!authUser ? <SignUp /> : <NotFound />} />

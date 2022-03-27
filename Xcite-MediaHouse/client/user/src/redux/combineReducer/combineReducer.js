@@ -1,8 +1,9 @@
 import {combineReducers} from 'redux'
-import { userAuth } from '../reducers/userReducers'
+import { userAuth, userInfo } from '../reducers/userReducers'
 
 const comAllReducer = combineReducers({
-    userAuth : userAuth
+    userAuth : userAuth,
+    userInfo : userInfo
 })
 
 

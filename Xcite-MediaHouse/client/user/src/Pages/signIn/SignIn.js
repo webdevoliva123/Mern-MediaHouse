@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import {useDispatch,useSelector} from 'react-redux'
+import React, { useEffect, useState } from "react";
+import {useDispatch, useSelector} from 'react-redux'
 import {
   Grid,
   Paper,
@@ -7,15 +7,18 @@ import {
   TextField,
   Button,
   Typography,
-  Link,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import axios from "axios";
-import { getError, getIsUserAuth, getLoading, getSuccess } from "../../redux/action/userAction";
-import { useNavigate } from "react-router-dom";
+import { getError, getIsUserAuth, getLoading, getSuccess, getUserInfo } from "../../redux/action/userAction";
+import { useNavigate,Link } from "react-router-dom";
 import BeforeLogin from "../../components/navbar/beforeLogin/BeforeLogin";
+import {toast} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
+toast.configure();
 
 const useStyles = makeStyles({
   image: {
@@ -73,6 +76,7 @@ const SignIn = () => {
       "password" : userData.password
     })
 
+    // User Login API
     await axios({
       method : "POST",
       url : "http://localhost:8080/api/v1/auth/login",
@@ -83,18 +87,25 @@ const SignIn = () => {
     }).then((response) => {
       dispatch(getLoading(false));
       dispatch(getSuccess(response.data.token));
+      dispatch(getUserInfo({
+        id:response.data.data._id,
+        name:response.data.data.name,
+        email:response.data.data.email,
+        avatar:response.data.data.profilePicture
+      }))
       dispatch(getIsUserAuth(true));
       dispatch(getError(''))
       navigate("/home")
+      toast.success("User Login Successfully.");
     }).catch((error) => {
       dispatch(getLoading(false));
       dispatch(getError(error))
       dispatch(getIsUserAuth(false));
       dispatch(getSuccess(''));
+      toast.error("User Unauthorized.");
     })
-    
   }
-
+  
   return (
     <>
     <BeforeLogin />
@@ -145,7 +156,7 @@ const SignIn = () => {
           />
           <div className="center-row-left">
             <FormControlLabel
-              control={<Checkbox name="checkedB" className={classes.textField} />}
+              control={<Checkbox name="checkedB" className={classes.textField}/>}
               label="Remember me"
             />
           </div>
@@ -163,17 +174,17 @@ const SignIn = () => {
           </div>
 
           <Typography>
-            <Link href="#" className={classes.textField}>
+            <Link to={"/forgetPassword"} className={classes.textField}>
               Forgot Password
             </Link>
           </Typography>
           <Typography style={{width:"100%"}} className="center-row-left">
             Don't have an account?{" "} 
-            <Link href="#" className={classes.textField} style={{paddingLeft:"5px"}}>
+            <Link to={"/signUp"} className={classes.textField} style={{paddingLeft:"5px"}}>
               Register
             </Link>
           </Typography>
-        </Paper>
+        </Paper>t
       </Grid>
 
       

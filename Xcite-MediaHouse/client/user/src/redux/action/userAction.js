@@ -34,3 +34,11 @@ export const getSetToken = (data) => {
         payload : data
     }
 }
+
+
+export const getUserInfo = (data) => {
+    return {
+        type : actionType.USER_INFO,
+        payload :  data
+    }
+}
