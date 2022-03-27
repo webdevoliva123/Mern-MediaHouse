@@ -45,7 +45,7 @@ app.use("/api/v2",jounRoutes);
 app.use("/api/v3",adminRoutes);
 
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 5000;
 
 // createing server
 app.listen(PORT, () => {
