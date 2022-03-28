@@ -9,9 +9,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core";
 import axios from 'axios';
-import BeforeLogin from "../../components/navbar/beforeLogin/BeforeLogin";
 import { useNavigate,Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import {toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -108,7 +106,6 @@ const SignUp = () => {
    
   return (
     <>
-    <BeforeLogin />
     <Grid container style={{height:"90vh"}}>
       <Grid item md={6}>
         <img className={classes.image} src={"https://res.cloudinary.com/xciteeducation/image/upload/v1648322176/extra%20images/signUp.jpg"} />

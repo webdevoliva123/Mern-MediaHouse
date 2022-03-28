@@ -13,13 +13,6 @@ export const getSuccess = (data) => {
         payload : data
     }
 }
-
-export const getIsUserAuth = (data) => {
-    return {
-        type : actionType.USER_SET_IS_USER_AUTH,
-        payload : data
-    }
-}
     
 export const getError = (data) => {
     return {

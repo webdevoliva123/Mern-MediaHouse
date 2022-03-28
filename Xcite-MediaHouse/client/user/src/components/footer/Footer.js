@@ -18,12 +18,12 @@ function Footer() {
                 <div className="footer-links">
                     <ul>
                         <li>
-                            <a to='/' className='nav-link'>Home</a>
-                            <a to='/' className='nav-link'>News</a>
-                            <a to='/' className='nav-link'>Business</a>
-                            <a to='/' className='nav-link'>Sociology</a>
-                            <a to='/' className='nav-link'>Tech</a>
-                            <a to='/' className='nav-link'>Economics</a>
+                            <a href='/home' className='nav-link'>Home</a>
+                            <a href='/news' className='nav-link'>News</a>
+                            <a href='/business' className='nav-link'>Business</a>
+                            <a href='/sociology' className='nav-link'>Sociology</a>
+                            <a href='/tech' className='nav-link'>Tech</a>
+                            <a href='/economic' className='nav-link'>Economic</a>
                         </li>
                     </ul>
                 </div>
@@ -34,7 +34,7 @@ function Footer() {
                 </div>
                 <div className='call-to-action'>
                     <p>Register as</p>
-                    <Button sx={{background: '#dc143c',padding:"10px 10px"}} variant="contained">Journalist</Button>
+                    <Button style={{background: '#dc143c',padding:"10px 10px"}} variant="contained">Journalist</Button>
                 </div>
                 <div className="mh-cc">
                     <p>Copyright All rights reserved | <span className='logo'>MediaHouse.com</span></p>

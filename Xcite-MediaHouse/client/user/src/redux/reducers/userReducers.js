@@ -4,7 +4,6 @@ const userAuthInitial = {
     loading : false,
     success : "",
     error : "",
-    authUser : false
 }
 
 const userAuth = (state = userAuthInitial,{type,payload}) => {
@@ -14,8 +13,6 @@ const userAuth = (state = userAuthInitial,{type,payload}) => {
         case actionType.USER_LOGIN_SUCCESS :
             localStorage.setItem("token" , payload);
             return (userAuthInitial.success = payload, state);
-        case actionType.USER_SET_IS_USER_AUTH :
-            return (userAuthInitial.authUser = payload, state);
         case actionType.USER_LOGIN_ERROR :
             return (userAuthInitial.error = payload, state);
         case actionType.USER_SET_TOKEN:

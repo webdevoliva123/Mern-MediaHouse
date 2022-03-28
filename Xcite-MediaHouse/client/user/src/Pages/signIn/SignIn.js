@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import {useDispatch, useSelector} from 'react-redux'
+import React, {useState } from "react";
+import {useDispatch} from 'react-redux'
 import {
   Grid,
   Paper,
@@ -12,9 +12,8 @@ import { makeStyles } from "@material-ui/core";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import axios from "axios";
-import { getError, getIsUserAuth, getLoading, getSuccess, getUserInfo } from "../../redux/action/userAction";
+import { getError, getLoading, getSuccess, getUserInfo } from "../../redux/action/userAction";
 import { useNavigate,Link } from "react-router-dom";
-import BeforeLogin from "../../components/navbar/beforeLogin/BeforeLogin";
 import {toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -93,22 +92,20 @@ const SignIn = () => {
         email:response.data.data.email,
         avatar:response.data.data.profilePicture
       }))
-      dispatch(getIsUserAuth(true));
       dispatch(getError(''))
       navigate("/home")
       toast.success("User Login Successfully.");
     }).catch((error) => {
       dispatch(getLoading(false));
-      dispatch(getError(error))
-      dispatch(getIsUserAuth(false));
+      dispatch(getError(error));
       dispatch(getSuccess(''));
+      navigate("/")
       toast.error("Invalid Email or Password");
     })
   }
   
   return (
     <>
-    <BeforeLogin />
     <Grid container style={{height:"90vh"}}>
       <Grid item md={6}>
         <img className={classes.image} src={`https://images.unsplash.com/photo-1607377444043-2092432d4140?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80`} />

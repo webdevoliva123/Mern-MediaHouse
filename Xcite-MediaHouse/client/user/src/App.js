@@ -3,10 +3,8 @@ import {Route, Routes, useNavigate} from 'react-router-dom'
 import Footer from './components/footer/Footer';
 import SignUp from './Pages/signUp/SignUp';
 import SignIn from './Pages/signIn/SignIn';
-import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getIsUserAuth, getSetToken, getUserInfo } from './redux/action/userAction';
-import axios from 'axios';
+import { getSetToken, getUserInfo } from './redux/action/userAction';
 import NotFound from './Pages/error/NotFound';
 import Logout from './Pages/Logout/Logout';
 import BeforeHome from './Pages/home/BeforeHome';
@@ -20,44 +18,30 @@ import Tech from './Pages/tech/Tech';
 import Economic from './Pages/economic/Economic';
 import Others from './Pages/others/Others';
 import ForgetPassword from './Pages/forgetPassword/ForgetPassword';
+import BeforeLogin from './components/navbar/beforeLogin/BeforeLogin';
+import AfterLogin from './components/navbar/afterLogin/AfterLogin';
 
 
 function App() {
   const dispatch = useDispatch();
   const token = localStorage.getItem('token');
   const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-  const navigate = useNavigate();
 
+    // Sendin Token To Redux
     dispatch(getSetToken(token));
-    dispatch(getUserInfo(userInfo))
+    dispatch(getUserInfo(userInfo));
 
-    useEffect(async () =>{
-      await axios({
-        method : "GET",
-        url : "http://localhost:8080/api/v1/route/authorized",
-        headers : {
-          "Content-Type" : "application/json",
-          "x-access-token" : token
-        }
-      }).then(() => {
-        dispatch(getIsUserAuth(true));
-        navigate('/home')
-      }).catch(() => {
-        dispatch(getIsUserAuth(false));
-        navigate('/')
-        
-      })
-    },[])
-
-  const authUser = useSelector((state) => state.userAuth.authUser);
+    // Is User Auth. ?
+    const authUser = useSelector((state) => state.userAuth.success);
 
   return (
     <>
         <div className="container" >
+          {authUser ? <AfterLogin /> : <BeforeLogin />}
         <Routes>
-          <Route exact path='/' element={<BeforeHome />}/>
-          <Route exact path='/signUp' element={!authUser ? <SignUp /> : <NotFound />} />
-          <Route exact path='/signIn' element={!authUser ? <SignIn /> : <NotFound />} />
+          <Route exact path='/' element={!authUser ? <BeforeHome/> : <NotFound />}/>
+          <Route exact path='/signUp' element={!authUser  ? <SignUp /> : <NotFound />} />
+          <Route exact path='/signIn' element={!authUser  ? <SignIn /> : <NotFound />} />
           <Route exact path='/forgetPassword' element={!authUser ? <ForgetPassword /> : <NotFound />} />
           <Route exact path='/home' element={authUser ? <AfterHome />  : <NotFound />}/>
           <Route exact path='/business' element={authUser ? <Business />  : <NotFound />}/>

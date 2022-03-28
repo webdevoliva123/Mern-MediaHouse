@@ -1,7 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
-import AfterLogin from '../../components/navbar/afterLogin/AfterLogin';
 import { getSetToken, getUserInfo } from '../../redux/action/userAction';
 
 const Logout = () => {
@@ -18,7 +17,6 @@ const Logout = () => {
     }
   return (
     <div>
-        <AfterLogin />
         <button onClick={onLogout} >Logout</button>
     </div>
   )
