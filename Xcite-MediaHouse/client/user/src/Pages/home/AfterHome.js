@@ -1,20 +1,17 @@
-import React, { useEffect } from 'react'
+import React from 'react'
+import HomeLatestBlog from '../../components/homeLatestBlog/HomeLatestBlog';
+import HomeSingleBlog from '../../components/homeSingleBlog/HomeSingleBlog';
 import { Protected } from '../../protected/protected'
 const AfterHome = () => {
   // Make This Page Protected
   Protected();
 
-  // Get Some Lastest Blog On
-  const get7lastestBlog = () => {
-  }
-
-  // Get Some Data When Page Load
-  useEffect(() => {
-    get7lastestBlog();
-  })
   return (
     <>
-    <div>Home</div>
+      {/* Singe Blog */}
+      <HomeSingleBlog login={true}/>
+      {/* Latest Blog */}
+      <HomeLatestBlog login={true}/>
     </>
   )
 }

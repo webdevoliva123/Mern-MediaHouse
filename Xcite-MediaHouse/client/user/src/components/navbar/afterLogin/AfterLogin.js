@@ -39,7 +39,7 @@ const ResponsiveAppBar = () => {
   // Getting User Avatar From Redux
   const userAvatar = useSelector((state) =>  state.userInfo.userInfoInitial.avatar);
   return (
-    <AppBar position="static" style={{background:"#272727"}}>
+    <AppBar position="static" style={{background:"#111"}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -82,7 +82,7 @@ const ResponsiveAppBar = () => {
             >
               {React.Children.toArray(pages.map((page) => (
                 <MenuItem  onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page.pageName}</Typography>
+                  <Link to={page.pageLink}><Typography textAlign="center">{page.pageName}</Typography></Link>
                 </MenuItem>
               )))}
             </Menu>

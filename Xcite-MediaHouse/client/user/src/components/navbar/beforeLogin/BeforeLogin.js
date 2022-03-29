@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 function BeforeLogin() {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" style={{background: '#272727'}}>
+      <AppBar position="static" style={{background: '#111'}}>
         <Toolbar>
           <IconButton
             size="large"
