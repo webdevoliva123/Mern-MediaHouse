@@ -97,6 +97,15 @@ body{
   align-items: space-between;
 }
 
+
+
+/* Main-Container */
+.container{
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
 /* lastestSingleBlog */
 .lastestSingleBlog__container{
   width: 100%;
@@ -200,12 +209,110 @@ body{
   margin-left: 5px;
 }
 
-/* Main-Container */
-.container{
+/* Headings */
+.Headings__container{
   width: 100%;
-  min-height: 100vh;
-  overflow-x: hidden;
+  padding: 10px 50px;
+  font-weight: 800;
+  font-size: 2.2em;
+  margin-bottom: 15px;
+  color: var(--lighter-black);
 }
+
+.Headings__container span{
+  width: 100px;
+  height: 1px;
+  background: var(--darker-gery);
+  margin-right: 10px;
+}
+
+/* LatestBlog */
+.HomeLatestBlog__container{
+  width: 100%;
+  height: 68vh;
+  background: var(--lighter-grey);
+  padding: 25px 50px;
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  grid-template-rows: repeat(3,30vh);
+  grid-gap: 10px;
+  position: relative;
+}
+
+.HomeLatestBlog__container-div{
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+#HomeLatestBlog__container-div__one{
+  grid-row-start:1;
+  grid-row-end:3;
+}
+
+.HomeLatestBlog__container-div .imgBx{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow:hidden,
+}
+
+.HomeLatestBlog__container-div .imgBx::before{
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top right, var(--black) 10%, transparent);
+}
+
+.HomeLatestBlog__container-div .imgBx img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.HomeLatestBlog__container-div .content{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding:40px 25px;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+}
+
+#HomeLatestBlog__container-div__one  .HomeLatestBlog__container-div-title{
+  display: block;
+  color: var(--white);
+  font-size: 2em;
+  font-weight: 400;
+  margin-bottom: 10px;
+}
+
+#HomeLatestBlog__container-div__one .HomeLatestBlog__container-div-description{
+  font-size: 0.8em;
+  color:  var(--lighter-grey);
+}
+
+.HomeLatestBlog__container-div-title {
+  display: block;
+  color: var(--white);
+  font-size: 1em;
+  font-weight: 500;
+  margin-bottom: 10px;
+  max-width: 100%;
+  cursor: pointer;
+}
+
+.HomeLatestBlog__container-div-description{
+  font-size: 0.7em;
+  color:  var(--lighter-grey);
+}
+
 
 /* Footer */
 .footer {

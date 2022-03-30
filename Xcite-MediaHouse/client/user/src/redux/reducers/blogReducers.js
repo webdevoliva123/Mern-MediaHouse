@@ -1,8 +1,17 @@
 import actionType from "../constant/actionType";
 
-export const sixLatestBlog = (state = {blogs : {}},{type,payload}) => {
+export const topLatestBlog = (state = {blogs : {}},{type,payload}) => {
     switch(type){
-        case actionType.SIX_LATEST_BLOG :
+        case actionType.TOP_LATEST_BLOG :
+            return ({blogs : payload})
+        default :
+            return state
+    }
+}
+
+export const topFiveBlog = (state = {blogs : {}},{type,payload}) => {
+    switch(type){
+        case actionType.TOP_FIVE_LATEST_BLOG :
             return ({blogs : payload})
         default :
             return state
