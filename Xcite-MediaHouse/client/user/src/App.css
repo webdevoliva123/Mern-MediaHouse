@@ -234,20 +234,35 @@ body{
   padding: 25px 50px;
   display: grid;
   grid-template-columns: repeat(3,1fr);
-  grid-template-rows: repeat(3,30vh);
+  grid-template-rows: repeat(2,30vh);
   grid-gap: 10px;
   position: relative;
+  margin-bottom: 25px;
+}
+
+.HomeLatestBlog__container.section{
+  height: 38vh;
+  grid-template-columns: repeat(4,1fr);
+  grid-template-rows: repeat(1,30vh);
+  
 }
 
 .HomeLatestBlog__container-div{
   width: 100%;
   height: 100%;
   position: relative;
+  overflow: hidden;
+  cursor: pointer;
 }
 
-#HomeLatestBlog__container-div__one{
+.HomeLatestBlog__container-div:nth-child(1){
   grid-row-start:1;
   grid-row-end:3;
+}
+
+.HomeLatestBlog__container.section .HomeLatestBlog__container-div:nth-child(1){
+  grid-row-start:1;
+  grid-row-end:2;
 }
 
 .HomeLatestBlog__container-div .imgBx{
@@ -267,25 +282,34 @@ body{
   width: 100%;
   height: 100%;
   background: linear-gradient(to top right, var(--black) 10%, transparent);
+  z-index: 2;
 }
 
 .HomeLatestBlog__container-div .imgBx img{
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: 0.5s ease;
+  z-index: 1;
+}
+
+.HomeLatestBlog__container-div:hover .imgBx img{
+  transform: scale(1.2);
+  z-index: 1;
 }
 
 .HomeLatestBlog__container-div .content{
   position: relative;
   width: 100%;
   height: 100%;
-  padding:40px 25px;
+  padding:30px 25px;
   display: flex;
   justify-content: flex-end;
   flex-direction: column;
+  z-index: 5;
 }
 
-#HomeLatestBlog__container-div__one  .HomeLatestBlog__container-div-title{
+.HomeLatestBlog__container-div:nth-child(1)  .HomeLatestBlog__container-div-title{
   display: block;
   color: var(--white);
   font-size: 2em;
@@ -293,12 +317,12 @@ body{
   margin-bottom: 10px;
 }
 
-#HomeLatestBlog__container-div__one .HomeLatestBlog__container-div-description{
+.HomeLatestBlog__container-div:nth-child(1) .HomeLatestBlog__container-div-description{
   font-size: 0.8em;
   color:  var(--lighter-grey);
 }
 
-.HomeLatestBlog__container-div-title {
+.HomeLatestBlog__container-div-title, .HomeLatestBlog__container.section .HomeLatestBlog__container-div:nth-child(1) .HomeLatestBlog__container-div-title {
   display: block;
   color: var(--white);
   font-size: 1em;
@@ -308,11 +332,32 @@ body{
   cursor: pointer;
 }
 
-.HomeLatestBlog__container-div-description{
+.HomeLatestBlog__container-div-description, .HomeLatestBlog__container.section .HomeLatestBlog__container-div:nth-child(1) .HomeLatestBlog__container-div-description{
   font-size: 0.7em;
   color:  var(--lighter-grey);
 }
 
+.HomeLatestBlog__container-div-exInfo{
+  width: 100%;
+  margin-top: 10px;
+}
+
+.HomeLatestBlog__container-div-exInfo p{
+  color: var(--lighter-grey);
+  font-size: 0.6em;
+}
+
+.HomeLatestBlog__container-div-exInfo p ion-icon{
+  color: var(--darker-gery);
+  font-size: 1em;
+  margin-right: 5px;
+}
+
+.HomeLatestBlog__container-div-exInfo p span{
+  color: var(--white);
+  font-size: 1em;
+  margin: 10px;
+}
 
 /* Footer */
 .footer {

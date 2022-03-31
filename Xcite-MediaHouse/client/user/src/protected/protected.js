@@ -1,12 +1,10 @@
 import axios from 'axios';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom';
 import { getSuccess, getUserInfo } from '../redux/action/userAction';
 
 export const Protected = () => {
     const userToken = useSelector((state) => state.userAuth.success);
-    const navigate = useNavigate();
     const dispatch = useDispatch();
     useEffect(async () => {
       await axios({

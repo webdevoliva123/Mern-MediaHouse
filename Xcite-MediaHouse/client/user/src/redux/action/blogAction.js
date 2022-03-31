@@ -17,3 +17,57 @@ export const getTopFiveBlog = (data) => {
         }
     )
 }
+
+export const getTopNewsBlog = (data) => {
+    return (
+        {
+            type :  actionType.TOP_FOUR_NEWS_BLOG,
+            payload : data
+        }
+    )
+}
+
+export const getTopBusinessBlog = (data) => {
+    return (
+        {
+            type :  actionType.TOP_FOUR_BUSINESS_BLOG,
+            payload : data
+        }
+    )
+}
+
+export const getTopSociologyBlog = (data) => {
+    return (
+        {
+            type :  actionType.TOP_FOUR_SOCIOLOGY_BLOG,
+            payload : data
+        }
+    )
+}
+
+export const getTopTechBlog = (data) => {
+    return (
+        {
+            type :  actionType.TOP_FOUR_TECH_BLOG,
+            payload : data
+        }
+    )
+}
+
+export const getTopEconomicBlog = (data) => {
+    return (
+        {
+            type :  actionType.TOP_FOUR_ECONOMIC_BLOG,
+            payload : data
+        }
+    )
+}
+
+export const getTopOthersBlog = (data) => {
+    return (
+        {
+            type :  actionType.TOP_FOUR_OTHER_BLOG,
+            payload : data
+        }
+    )
+}

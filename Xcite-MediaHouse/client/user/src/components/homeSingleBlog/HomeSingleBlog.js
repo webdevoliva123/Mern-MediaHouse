@@ -32,6 +32,7 @@ const HomeSingleBlog = ({login}) => {
 
   //get journalist
   const jounId = latestBlog?.jounId; 
+  
   //get journalist
   useEffect(async() => {
     await axios({
