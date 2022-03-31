@@ -20,6 +20,7 @@ import Others from './Pages/others/Others';
 import ForgetPassword from './Pages/forgetPassword/ForgetPassword';
 import BeforeLogin from './components/navbar/beforeLogin/BeforeLogin';
 import AfterLogin from './components/navbar/afterLogin/AfterLogin';
+import SingleBlog from './Pages/singleBlog/SingleBlog';
 
 
 function App() {
@@ -51,6 +52,7 @@ function App() {
           <Route exact path='/tech' element={authUser ? <Tech />  : <NotFound />}/>
           <Route exact path='/economic' element={authUser ? <Economic />  : <NotFound />}/>
           <Route exact path='/others' element={authUser ? <Others />  : <NotFound />}/>
+          <Route exact path='/blog/:id' element={authUser ? <SingleBlog />  : <NotFound />}/>
           <Route exact path='/profile' element={authUser ? <Profile />  : <NotFound />}/>
           <Route exact path='/account' element={authUser ? <UserAccount />  : <NotFound />}/>
           <Route exact path='/dashboard' element={authUser ? <UserDashboard />  : <NotFound />}/>

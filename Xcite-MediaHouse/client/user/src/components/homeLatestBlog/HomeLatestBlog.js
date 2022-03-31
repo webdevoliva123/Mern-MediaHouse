@@ -1,7 +1,7 @@
 import React from 'react'
 import Headings from '../headings/Headings'
 import timeSince from '../../time-ago/time-ago'
-const HomeLatestBlog = ({blogs,section}) => {
+const HomeLatestBlog = ({blogs,section,login}) => {
 
   return (
     <>
@@ -11,6 +11,7 @@ const HomeLatestBlog = ({blogs,section}) => {
             blogs.map((e) => {
                 return (
                     <>  
+                        <a href={login === true ? `/blog/${e?._id}` : `/signIn`}>
                         <div className="HomeLatestBlog__container-div">
                             <div className="imgBx">
                                 <img src={e?.image} alt={e?.title} />
@@ -25,6 +26,7 @@ const HomeLatestBlog = ({blogs,section}) => {
                                 </div>
                             </div>
                         </div>
+                        </a>
                     </>
                 )
             })

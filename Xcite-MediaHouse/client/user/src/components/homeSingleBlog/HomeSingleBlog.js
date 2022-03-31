@@ -60,7 +60,7 @@ const HomeSingleBlog = ({login}) => {
         <div className="lastestSingleBlog__container-content">
             <div>
                 <h1 className='lastestSingleBlog__container-Date_Time'>{timeAndDate?.date}<span>/</span>{timeAndDate?.mon}<span>/</span>{timeAndDate?.yr} <span className='lastestSingleBlog__container-Date_Time-devider'>-</span> {timeAndDate?.hr < 10 ? `0${timeAndDate?.hr}` : timeAndDate?.hr}:{timeAndDate?.min} <span className='lastestSingleBlog__container-Date_Time-day_night'>{timeAndDate?.hr < 12 ? `AM` : `PM`}</span></h1>
-                <span className='lastestSingleBlog__container-content__title'>{latestBlog?.title}</span>
+                <a href={login === true ? `/blog/${latestBlog?._id}` : `/signIn`}><span className='lastestSingleBlog__container-content__title'>{latestBlog?.title}</span></a>
                 <p className='lastestSingleBlog__container-content__description'>{latestBlog?.description}</p>
                 <div>
                     <p className='lastestSingleBlog__container-content__auth center-row-left' ><ion-icon name="pencil-outline"></ion-icon> Journalist : <span>{jounName}</span></p>

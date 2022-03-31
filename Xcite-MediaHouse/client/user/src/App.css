@@ -255,12 +255,12 @@ body{
   cursor: pointer;
 }
 
-.HomeLatestBlog__container-div:nth-child(1){
+.HomeLatestBlog__container a:nth-child(1){
   grid-row-start:1;
   grid-row-end:3;
 }
 
-.HomeLatestBlog__container.section .HomeLatestBlog__container-div:nth-child(1){
+.HomeLatestBlog__container.section a:nth-child(1){
   grid-row-start:1;
   grid-row-end:2;
 }
@@ -309,7 +309,7 @@ body{
   z-index: 5;
 }
 
-.HomeLatestBlog__container-div:nth-child(1)  .HomeLatestBlog__container-div-title{
+.HomeLatestBlog__container a:nth-child(1)  .HomeLatestBlog__container-div-title{
   display: block;
   color: var(--white);
   font-size: 2em;
@@ -317,12 +317,12 @@ body{
   margin-bottom: 10px;
 }
 
-.HomeLatestBlog__container-div:nth-child(1) .HomeLatestBlog__container-div-description{
+.HomeLatestBlog__container a:nth-child(1) .HomeLatestBlog__container-div-description{
   font-size: 0.8em;
   color:  var(--lighter-grey);
 }
 
-.HomeLatestBlog__container-div-title, .HomeLatestBlog__container.section .HomeLatestBlog__container-div:nth-child(1) .HomeLatestBlog__container-div-title {
+.HomeLatestBlog__container-div-title, .HomeLatestBlog__container.section  a:nth-child(1) .HomeLatestBlog__container-div-title {
   display: block;
   color: var(--white);
   font-size: 1em;
@@ -332,7 +332,7 @@ body{
   cursor: pointer;
 }
 
-.HomeLatestBlog__container-div-description, .HomeLatestBlog__container.section .HomeLatestBlog__container-div:nth-child(1) .HomeLatestBlog__container-div-description{
+.HomeLatestBlog__container-div-description, .HomeLatestBlog__container.section  a:nth-child(1) .HomeLatestBlog__container-div-description{
   font-size: 0.7em;
   color:  var(--lighter-grey);
 }
