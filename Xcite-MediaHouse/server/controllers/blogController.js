@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const Blog = require("../models/blogModel");
+const Journalist = require("../models/jounModel");
 
 // Get blogs by tags
 const getBlogByTag = asyncHandler(async (req,res) => {
@@ -200,7 +201,10 @@ const getAllBlogs = asyncHandler(async (req, res) => {
         const latestBlog = [];
 
         for(let i = 0; i< Blogs.length; i++){
-            latestBlog.push(Blogs[Blogs.length - (i+1)])
+            let data = {};
+            const jounInfo = await Journalist.findById(Blogs[Blogs.length - (i+1)].jounId);
+            data = {blogInfo : Blogs[Blogs.length - (i+1)] , jounInfo : {_id :jounInfo._id ,avatar : jounInfo.profilePicture,name : jounInfo.name}};
+            latestBlog.push(data);
         }
 
         res.status(200).json({
@@ -223,7 +227,10 @@ const getAllNewsBlogs = asyncHandler(async (req, res) => {
     const latestBlog = [];
 
         for(let i = 0; i< Blogs.length; i++){
-            latestBlog.push(Blogs[Blogs.length - (i+1)])
+            let data = {};
+            const jounInfo = await Journalist.findById(Blogs[Blogs.length - (i+1)].jounId);
+            data = {blogInfo : Blogs[Blogs.length - (i+1)] , jounInfo : {_id :jounInfo._id ,avatar : jounInfo.profilePicture,name : jounInfo.name}};
+            latestBlog.push(data);
         }
 
     if (Blogs.length > 0) {
@@ -246,8 +253,11 @@ const getAllBusinessBlogs = asyncHandler(async (req, res) => {
 
     const latestBlog = [];
 
-        for(let i = 0; i<= Blogs.length; i++){
-            latestBlog.push(Blogs[Blogs.length - (i+1)])
+        for(let i = 0; i< Blogs.length; i++){
+            let data = {};
+            const jounInfo = await Journalist.findById(Blogs[Blogs.length - (i+1)].jounId);
+            data = {blogInfo : Blogs[Blogs.length - (i+1)] , jounInfo : {_id :jounInfo._id ,avatar : jounInfo.profilePicture,name : jounInfo.name}};
+            latestBlog.push(data)
         }
 
     if (Blogs.length > 0) {
@@ -270,7 +280,10 @@ const getAllSociologyBlogs = asyncHandler(async (req, res) => {
     const latestBlog = [];
 
         for(let i = 0; i< Blogs.length; i++){
-            latestBlog.push(Blogs[Blogs.length - (i+1)])
+            let data = {};
+            const jounInfo = await Journalist.findById(Blogs[Blogs.length - (i+1)].jounId);
+            data = {blogInfo : Blogs[Blogs.length - (i+1)] , jounInfo : {_id :jounInfo._id ,avatar : jounInfo.profilePicture,name : jounInfo.name}};
+            latestBlog.push(data);
         }
 
     if (Blogs.length > 0) {
@@ -293,7 +306,10 @@ const getAllTechBlogs = asyncHandler(async (req, res) => {
     const latestBlog = [];
 
     for(let i = 0; i< Blogs.length; i++){
-        latestBlog.push(Blogs[Blogs.length - (i+1)])
+        let data = {};
+            const jounInfo = await Journalist.findById(Blogs[Blogs.length - (i+1)].jounId);
+            data = {blogInfo : Blogs[Blogs.length - (i+1)] , jounInfo : {_id :jounInfo._id ,avatar : jounInfo.profilePicture,name : jounInfo.name}};
+            latestBlog.push(data);
     }
 
     if (Blogs.length > 0) {
@@ -317,7 +333,10 @@ const getAllEconomicBlogs = asyncHandler(async (req, res) => {
     const latestBlog = [];
 
     for(let i = 0; i< Blogs.length; i++){
-        latestBlog.push(Blogs[Blogs.length - (i+1)])
+        let data = {};
+            const jounInfo = await Journalist.findById(Blogs[Blogs.length - (i+1)].jounId);
+            data = {blogInfo : Blogs[Blogs.length - (i+1)] , jounInfo : {_id :jounInfo._id ,avatar : jounInfo.profilePicture,name : jounInfo.name}};
+            latestBlog.push(data);
     }
 
     if (Blogs.length > 0) {
@@ -340,7 +359,10 @@ const getAllOtherBlogs = asyncHandler(async (req, res) => {
     const latestBlog = [];
 
     for(let i = 0; i< Blogs.length; i++){
-        latestBlog.push(Blogs[Blogs.length - (i+1)])
+        let data = {};
+            const jounInfo = await Journalist.findById(Blogs[Blogs.length - (i+1)].jounId);
+            data = {blogInfo : Blogs[Blogs.length - (i+1)] , jounInfo : {_id :jounInfo._id ,avatar : jounInfo.profilePicture,name : jounInfo.name}};
+            latestBlog.push(data);
     }
 
     if (Blogs.length > 0) {
