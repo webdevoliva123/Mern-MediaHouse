@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux'
-import { topBusinessBlog, topEconomicBlog, topFiveBlog, topLatestBlog, topNewsBlog, topOthersBlog, topSociologyBlog, topTechBlog } from '../reducers/blogReducers'
+import { latestBlogsOfPage, latestBlogsOfWeb, topBusinessBlog, topEconomicBlog, topFiveBlog, topLatestBlog, topNewsBlog, topOthersBlog, topSociologyBlog, topTechBlog } from '../reducers/blogReducers'
 import { userAuth, userInfo } from '../reducers/userReducers'
 
 const comAllReducer = combineReducers({
@@ -12,7 +12,9 @@ const comAllReducer = combineReducers({
     topSociologyBlog : topSociologyBlog,
     topTechBlog : topTechBlog,
     topEconomicBlog : topEconomicBlog,
-    topOthersBlog : topOthersBlog
+    topOthersBlog : topOthersBlog,
+    latestBlogsOfPage : latestBlogsOfPage,
+    latestBlogsOfWeb : latestBlogsOfWeb
 })
 
 

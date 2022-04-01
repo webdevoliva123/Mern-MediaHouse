@@ -71,3 +71,21 @@ export const getTopOthersBlog = (data) => {
         }
     )
 }
+
+export const getLatestBlogsOfPage = (data) => {
+    return (
+        {
+            type :  actionType.LATEST_BLOGS_OF_PAGE,
+            payload : data
+        }
+    )
+}
+
+export const getLatestBlogsOfWeb = (data) => {
+    return (
+        {
+            type :  actionType.LATEST_BLOGS_OF_WEB,
+            payload : data
+        }
+    )
+}

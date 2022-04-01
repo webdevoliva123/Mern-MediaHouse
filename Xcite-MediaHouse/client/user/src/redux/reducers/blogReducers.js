@@ -71,3 +71,21 @@ export const topOthersBlog = (state = {},{type,payload}) => {
             return state
     }
 }
+
+export const latestBlogsOfPage = (state = {},{type,payload}) => {
+    switch(type){
+        case actionType.LATEST_BLOGS_OF_PAGE :
+            return ({blogs : payload})
+        default :
+            return state
+    }
+}
+
+export const latestBlogsOfWeb = (state = {},{type,payload}) => {
+    switch(type){
+        case actionType.LATEST_BLOGS_OF_WEB :
+            return ({blogs : payload})
+        default :
+            return state
+    }
+}

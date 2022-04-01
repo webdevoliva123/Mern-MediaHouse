@@ -9,7 +9,7 @@ const HomeTopBlogOfSection = ({blogs,section,login}) => {
         {/* News Setction */}
         <div className="HomeLatestBlog__container section">
         {
-           blogs.map((e) => {
+           React.Children.toArray(blogs.map((e) => {
             return (
                 <>
                  <a href={login === true ? `/blog/${e?._id}` : `/signIn`}>
@@ -30,7 +30,7 @@ const HomeTopBlogOfSection = ({blogs,section,login}) => {
                  </a>
                 </>
             )
-           })
+           }))
         }
         </div>
     </>

@@ -8,7 +8,7 @@ const HomeLatestBlog = ({blogs,section,login}) => {
         <Headings title={section}/>
         <div className="HomeLatestBlog__container">
         {
-            blogs.map((e) => {
+            React.Children.toArray(blogs.map((e) => {
                 return (
                     <>  
                         <a href={login === true ? `/blog/${e?._id}` : `/signIn`}>
@@ -29,7 +29,7 @@ const HomeLatestBlog = ({blogs,section,login}) => {
                         </a>
                     </>
                 )
-            })
+            }))
         }
         </div>
     </>
