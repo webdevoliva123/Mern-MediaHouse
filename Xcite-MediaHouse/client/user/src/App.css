@@ -169,7 +169,7 @@ body{
 }
 
 .lastestSingleBlog__container-Date_Time-day_night{
-  font-size: 0.4em !important;
+  font-size: 1em !important;
   font-weight: 200 !important;
   color: var(--lighter-grey) !important;
   text-transform: uppercase;

@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const pages = [
-    {pageName:'Home',pageLink:"/home"}, {pageName:'Business',pageLink:"/business"},{pageName:'Sociology',pageLink:"/sociology"},{pageName:'Tech',pageLink:"/tech"},{pageName:"Economic",pageLink:"/economic"},{pageName:"Others",pageLink:"/others"}];
+    {pageName:'Home',pageLink:"/home"},{pageName:'News',pageLink:"/news"},{pageName:'Business',pageLink:"/business"},{pageName:'Sociology',pageLink:"/sociology"},{pageName:'Tech',pageLink:"/tech"},{pageName:"Economic",pageLink:"/economic"},{pageName:"Others",pageLink:"/others"}];
 const settings = [{pageName:'profile',pageLink:"/profile"},{pageName:"Account",pageLink:"/account"},{pageName:"Dashboard",pageLink:"/dashboard"},{pageName:"Logout",pageLink:"/logout"}];
 
 const ResponsiveAppBar = () => {
