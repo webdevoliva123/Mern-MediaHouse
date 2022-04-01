@@ -1,7 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const Blog = require("../models/blogModel");
 
-
 // Get blogs by tags
 const getBlogByTag = asyncHandler(async (req,res) => {
     const Blogs = await Blog.find({ tags : req.params.search });
@@ -26,14 +25,14 @@ const getBlogByTag = asyncHandler(async (req,res) => {
 }) 
 
 
-// Get 4 latest blogs
-const get4LatestBlogs = asyncHandler(async (req, res) => {
+// Get 6 latest blogs
+const get6LatestBlogs = asyncHandler(async (req, res) => {
     const Blogs = await Blog.find({});
     if (Blogs.length > 0) {
 
         const latestBlog = [];
 
-        for(let i = 0; i<4; i++){
+        for(let i = 0; i<6; i++){
             latestBlog.push(Blogs[Blogs.length - (i+1)])
         }
 
@@ -398,7 +397,7 @@ const getAllBlogsOfJounById = asyncHandler(async (req, res) => {
 
 module.exports = {
     getBlogByTag,
-    get4LatestBlogs,
+    get6LatestBlogs,
     get4LatestNewsBlogs,
     get4LatestBusinessBlogs,
     get4LatestSociologyBlogs,
