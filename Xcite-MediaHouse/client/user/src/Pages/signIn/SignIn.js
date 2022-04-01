@@ -99,7 +99,6 @@ const SignIn = () => {
       dispatch(getLoading(false));
       dispatch(getError(error));
       dispatch(getSuccess(''));
-      navigate("/signIn")
       toast.error("Invalid Email or Password");
     })
   }
