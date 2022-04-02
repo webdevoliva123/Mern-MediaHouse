@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import timeSince from '../../time-ago/time-ago'
 
-const DiffSection = ({blogs,latestBlog}) => {
+const DiffSection = ({title,blogs,latestBlog}) => {
     const [showBlogs,setShowBlogs] = useState(20);
     console.log(showBlogs);
   return (
@@ -10,6 +10,11 @@ const DiffSection = ({blogs,latestBlog}) => {
             <div className="section_container-divOne">
                <div className="imgBx">
                 <img src={blogs[0]?.blogInfo?.image} alt={blogs[0]?.blogInfo?.title} />
+               </div>
+               <div className="-divOne__content center-row-left">
+                    <div>
+                        <h1>{title}</h1>
+                    </div>
                </div>
             </div>
             <div className="section_container-divTwo center-row-left-right">
@@ -66,8 +71,26 @@ const DiffSection = ({blogs,latestBlog}) => {
                     </> : null
                 }
                 </div>
-                <div className="-divTwo__latestBlogsContainer">
-
+                <div className="-divTwo__latestBlogsContainer .center-column-left">
+                    <h1>Latest Blogs</h1>
+                    {
+                        React.Children.toArray(
+                            latestBlog.map((e,i) => {
+                                if(i<20){
+                                    return (
+                                        <>
+                                            <div className='-divTwo__latestBlogsContainer-blogs'>
+                                                <div className="imgBx">
+                                                    <img src={e?.blogInfo?.image} alt={e?.blogInfo?.title} />
+                                                </div>
+                                                <a href={`/blog/${e?.blogInfo?._id}`}><span>{e?.blogInfo?.title}</span></a>
+                                            </div>
+                                        </>
+                                    )
+                                }
+                            })
+                        )
+                    }
                 </div>
             </div>
         </div>

@@ -54,7 +54,7 @@ const Business = () => {
 
   return (
     <>
-      <DiffSection blogs={blogsOfPage ? blogsOfPage : []} latestBlog={latestBlog ? latestBlog : []}/>
+      <DiffSection title={`Business Blogs`} blogs={blogsOfPage ? blogsOfPage : []} latestBlog={latestBlog ? latestBlog : []}/>
     </>
   )
 }

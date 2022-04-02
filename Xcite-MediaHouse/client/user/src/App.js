@@ -21,6 +21,7 @@ import ForgetPassword from './Pages/forgetPassword/ForgetPassword';
 import BeforeLogin from './components/navbar/beforeLogin/BeforeLogin';
 import AfterLogin from './components/navbar/afterLogin/AfterLogin';
 import SingleBlog from './Pages/singleBlog/SingleBlog';
+import News from './Pages/news/News';
 
 
 function App() {
@@ -47,6 +48,7 @@ function App() {
           <Route exact path='/signIn' element={!authUser  ? <SignIn /> : <NotFound />} />
           <Route exact path='/forgetPassword' element={!authUser ? <ForgetPassword /> : <NotFound />} />
           <Route exact path='/home' element={authUser ? <AfterHome />  : <NotFound />}/>
+          <Route exact path='/news' element={authUser ? <News />  : <NotFound />}/>
           <Route exact path='/business' element={authUser ? <Business />  : <NotFound />}/>
           <Route exact path='/sociology' element={authUser ? <Sociology />  : <NotFound />}/>
           <Route exact path='/tech' element={authUser ? <Tech />  : <NotFound />}/>
