@@ -381,9 +381,28 @@ const getAllOtherBlogs = asyncHandler(async (req, res) => {
 // Get blog by blog id
 const getBlogById = asyncHandler(async (req, res) => {
     const foundBlog = await Blog.findById(req.params.id);
+    const userId = req.userId;
     if (foundBlog) {
         const journalist = await Journalist.findById(foundBlog.jounId);
-        const data = {blogInfo : foundBlog ,jounInfo : {avatar : journalist.profilePicture,name : journalist.name, subscriber : journalist.subscribe.length}}
+        
+        const subs = [];
+        const liked = [];
+        
+        // Check If user Subscribed This Blog Or Not
+        journalist.subscribe.map((e) => {
+            if(e === userId){
+                subs.push(e)
+            }
+        })
+
+        // Check If user Liked This Blog Or Not
+        foundBlog.likes.map((e) => {
+            if(e === userId){
+                liked.push(e);
+            }
+        })
+
+        const data = {blogInfo : {foundBlog, thieUserLiked : subs.length > 0 ? true : false } ,jounInfo : {avatar : journalist.profilePicture,name : journalist.name, subscriber : journalist.subscribe.length, thisUserSubscribed : liked.length > 0 ? true : false}}
         res.status(200).json({
             success: true,
             data
