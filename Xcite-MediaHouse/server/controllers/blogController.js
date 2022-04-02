@@ -382,9 +382,11 @@ const getAllOtherBlogs = asyncHandler(async (req, res) => {
 const getBlogById = asyncHandler(async (req, res) => {
     const foundBlog = await Blog.findById(req.params.id);
     if (foundBlog) {
+        const journalist = await Journalist.findById(foundBlog.jounId);
+        const data = {blogInfo : foundBlog ,jounInfo : {avatar : journalist.profilePicture,name : journalist.name, subscriber : journalist.subscribe.length}}
         res.status(200).json({
             success: true,
-            data: foundBlog,
+            data
         });
     } else {
         return res.status(404).json({
