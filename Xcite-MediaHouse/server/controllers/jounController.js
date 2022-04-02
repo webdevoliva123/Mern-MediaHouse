@@ -114,7 +114,10 @@ const getJounById = asyncHandler(asyncHandler (async(req,res) => {
 
 // Get Journalist By Name
 const getJounByName = asyncHandler(async (req,res) => {
-    const journalist = await Journalist.find({ name : req.params.search });
+    console.log(req.params.search);
+    const journalist = await Journalist.findOne({ name : req.params.search });
+
+    console.log(journalist);
 
     if (Journalist) {
         res.status(200).json({

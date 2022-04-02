@@ -6,7 +6,6 @@ const Blog = require("../models/blogModel");
 const Journalist = require("../models/jounModel");
 const nodeMailSender = require("../middlewares/mailSender");
 const JWT = require('jsonwebtoken');
-const { get } = require("../routers/userRoutes");
 
 
 // User Register
@@ -287,30 +286,42 @@ const userLikeBlog = asyncHandler(async (req,res) => {
 
     if(user){
         const blog = await Blog.findById(blogId)
-        const likesData = blog.likes;
-        const alreadyLiked = likesData.filter((e) => {
+        const bloglikesData = blog.likes;
+        const userLikeData =  user.likedBlogs
+
+        const blogAlreadyLiked = bloglikesData.filter((e) => {
             if(e === userId){
                 return e
             }
         })
-
-       const isAlreadyLiked = alreadyLiked.length <= 0 ? true : false;
-        if(isAlreadyLiked){
-            await Blog.updateOne({_id : blogId},{$push : {likes : userId}})
-        .then(() => {
-            res.status(200).json({
-                success : true,
-                message : "Blog found & liked",
-            })
-
-            Blog.save();
-
-        }).catch(() => {
-            return res.status(400).json({
-                success : false,
-                error : "Blog not found",
-            })
+        
+        const userAlreadyLiked = userLikeData.filter((e) => {
+            if(e === blogId){
+                return e
+            }
         })
+
+
+       const isBlogAlreadyLiked = blogAlreadyLiked.length <= 0 ? true : false;
+       const isUserAlreadyLiked = userAlreadyLiked.length <= 0 ? true : false;
+        if(isBlogAlreadyLiked && isUserAlreadyLiked){
+            try {
+                await Blog.updateOne({_id : blogId},{$push : {likes : userId}})
+                await User.updateOne({_id : userId},{$push : {likedBlogs : blogId}})
+
+                res.status(200).json({
+                    success : true,
+                    message : "Blog found & liked",
+                })
+    
+                Blog.save();
+                User.save();
+            } catch{
+                return res.status(400).json({
+                    success : false,
+                    error : "Blog not found",
+                })
+            }
         }else{
             return res.status(400).json({
                 success : false,
@@ -327,6 +338,7 @@ const userLikeBlog = asyncHandler(async (req,res) => {
 })
 
 
+
 // User Remove Like Blog
 const userRemoveLikeFromBlog = asyncHandler(async (req,res) => {
     const {blogId,userId} = req.body;
@@ -335,30 +347,41 @@ const userRemoveLikeFromBlog = asyncHandler(async (req,res) => {
 
     if(user){
         const blog = await Blog.findById(blogId)
-        const likesData = blog.likes;
-        const alreadyRemoveLiked = likesData.filter((e) => {
+        const bloglikesData = blog.likes;
+        const userLikeData =  user.likedBlogs
+
+        const blogAlreadyLiked = bloglikesData.filter((e) => {
             if(e === userId){
                 return e
             }
         })
+        
+        const userAlreadyLiked = userLikeData.filter((e) => {
+            if(e === blogId){
+                return e
+            }
+        })
 
-       const isAlreadyRemoveLiked = alreadyRemoveLiked.length > 0 ? true : false;
-        if(isAlreadyRemoveLiked){
+       const isBlogAlreadyLiked = blogAlreadyLiked.length > 0 ? true : false;
+       const isUserAlreadyLiked = userAlreadyLiked.length > 0 ? true : false;
+        if(isBlogAlreadyLiked && isUserAlreadyLiked){
+            try {
             await Blog.updateOne({_id : blogId},{$pull : {likes : userId}})
-        .then(() => {
+            await User.updateOne({_id : userId},{$pull : {likedBlogs : blogId}})
             res.status(200).json({
                 success : true,
                 message : "Blog found & removeLiked",
             })
 
             Blog.save();
+            User.save();
 
-        }).catch(() => {
-            return res.status(400).json({
-                success : false,
-                error : "Blog not found",
-            })
-        })
+            } catch{
+                return res.status(400).json({
+                    success : false,
+                    error : "Blog not found",
+                }) 
+            }
         }else{
             return res.status(400).json({
                 success : false,
@@ -382,33 +405,42 @@ const subscribeToJoun = asyncHandler(async (req,res) => {
 
     if(user){
         const journalist = await Journalist.findById(jounId);
-        const subscribeData = journalist.subscribe;
+        const jounSubscribeData = journalist.subscribe;
+        const userSubscribeData = user.subscribed;
 
-        const alreadySubscribe = subscribeData.filter((e) => {
+        const jounAlreadySubscribe = jounSubscribeData.filter((e) => {
             if(e === userId){
                 return e
             }
         })
+        
+        const userAlreadySubscribe = userSubscribeData.filter((e) => {
+            if(e === jounId){
+                return e
+            }
+        })
 
-        const isAlreadySubscribe = alreadySubscribe.length <= 0 ? true : false;
+        const isJounAlreadySubscribe = jounAlreadySubscribe.length <= 0 ? true : false;
+        const isUserAlreadySubscribe = userAlreadySubscribe.length <= 0 ? true : false;
 
-        if(isAlreadySubscribe){
-            await Journalist.updateOne({_id : jounId},{$push : {subscribe : userId}}).then(() => {
+        if(isJounAlreadySubscribe && isUserAlreadySubscribe){
+            try {
+                await Journalist.updateOne({_id : jounId},{$push : {subscribe : userId}})
+                await User.updateOne({_id : userId},{$push : {subscribed : jounId}})
+
                 res.status(200).json({
                     success : true,
                     message : "Joun found & subscribed",
                 })
     
                 Journalist.save();
-    
-            }).catch(() => {
+                User.save();
+            } catch{
                 return res.status(400).json({
                     success : false,
                     error : "Joun not found",
                 })
-            })
-
-            
+            }
         }else{
             return res.status(400).json({
                 success : false,
@@ -434,31 +466,41 @@ const unSubscribeToJun = asyncHandler(async (req,res) => {
 
     if(user){
         const journalist = await Journalist.findById(jounId);
-        const subscribeData = journalist.subscribe;
+        const jounSubscribeData = journalist.subscribe;
+        const userSubscribeData = user.subscribed;
 
-        const alreadySubscribe = subscribeData.filter((e) => {
+        const jounAlreadySubscribe = jounSubscribeData.filter((e) => {
             if(e === userId){
                 return e
             }
         })
-
-       const isAlreadyUnsubscribe = alreadySubscribe.length > 0 ? true : false;
-        if(isAlreadyUnsubscribe){
-            await Journalist.updateOne({_id : jounId},{$pull : {subscribe : userId}})
-        .then(() => {
-            res.status(200).json({
-                success : true,
-                message : "Joun found & unsubscribe",
-            })
-
-            Journalist.save();
-
-        }).catch(() => {
-            return res.status(400).json({
-                success : false,
-                error : "Joun not found",
-            })
+        
+        const userAlreadySubscribe = userSubscribeData.filter((e) => {
+            if(e === jounId){
+                return e
+            }
         })
+
+        const isJounAlreadySubscribe = jounAlreadySubscribe.length > 0 ? true : false;
+        const isUserAlreadySubscribe = userAlreadySubscribe.length > 0 ? true : false;
+        if(isJounAlreadySubscribe && isUserAlreadySubscribe){
+            try {
+                await Journalist.updateOne({_id : jounId},{$pull : {subscribe : userId}})
+                await User.updateOne({_id : userId},{$pull : {subscribed : jounId}})  
+
+                res.status(200).json({
+                    success : true,
+                    message : "Joun found & unsubscribe",
+                })
+    
+                Journalist.save();
+                User.save();
+            } catch{
+                return res.status(400).json({
+                    success : false,
+                    error : "Joun not found",
+                })
+            }
         }else{
             return res.status(400).json({
                 success : false,

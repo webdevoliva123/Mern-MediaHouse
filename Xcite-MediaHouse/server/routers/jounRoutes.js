@@ -29,7 +29,7 @@ router.route("/joun/update/blog").put(protectedForJoun,updateBlogOfJounByJoun);
 router.route("/joun/search/:id").get(getJounById);
 
 // For Finding Journalist By Name
-router.route("/joun/search/:search").get(getJounByName);
+router.route("/joun/search/name/:search").get(getJounByName);
 
 // For Finding All Blogs Journalist By Id
 router.route("/joun/blog/search/:id").get(protectedForJoun,getAllBlogsOfJounById);

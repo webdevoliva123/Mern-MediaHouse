@@ -24,8 +24,19 @@ const userSchema = mongoose.Schema(
             required: true,
             default:
                 "https://res.cloudinary.com/xciteeducation/image/upload/v1647730586/extra%20images/avatar_a9s6j6.jpg",
-        }
-
+        },
+        subscribed : [
+            {
+                type : String,
+                required : true
+            }
+        ],
+        likedBlogs : [
+            {
+                type : String,
+                required : true
+            }
+        ]
     },
     {
         timestamps: true,

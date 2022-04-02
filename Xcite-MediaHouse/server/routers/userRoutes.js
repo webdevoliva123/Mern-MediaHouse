@@ -7,13 +7,13 @@ const {
     updateUserName,
     updateUserEmail,
     updateUserPassword,
-    userLikeBlog,
     userRemoveLikeFromBlog,
     subscribeToJoun,
     unSubscribeToJun,
     forgetPasswordUser,
     authForResetPassPage,
     resetPassword,
+    userLikeBlog,
 } = require("../controllers/userControllers");
 
 const verifyToken = require('../middlewares/verifyToken');
@@ -42,6 +42,7 @@ router.route("/user/update/email").put(verifyToken,updateUserEmail);
 router.route("/user/update/password").put(verifyToken,updateUserPassword);
 
 // for like blog by user
+// router.route("/user/blog/like").post(verifyToken,userLikeBlogUpUser);
 router.route("/user/blog/like").post(verifyToken,userLikeBlog);
 
 // for remove like from blog by user
