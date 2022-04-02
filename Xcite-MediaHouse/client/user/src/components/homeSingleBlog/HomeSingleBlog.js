@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { getTopLatestBlog } from '../../redux/action/blogAction';
+import { getSetLoaader } from '../../redux/action/extraAction';
 import timeSince, { getCurrentTime_Date } from '../../time-ago/time-ago'
 
 const HomeSingleBlog = ({login}) => {
@@ -10,6 +11,7 @@ const HomeSingleBlog = ({login}) => {
   const [jounName,setJounName] = useState("");
   // Get Some Lastest Blog On
   const get7lastestBlog = async() => {
+    dispatch(getSetLoaader(true))
     await axios({
       method : "GET",
       url : "http://localhost:8080/api/v1/blog/6latestBlogs",
@@ -19,7 +21,9 @@ const HomeSingleBlog = ({login}) => {
     }).then((res) => {
       const getData = res.data.data[0];
       dispatch(getTopLatestBlog(getData))
+      dispatch(getSetLoaader(false))
     })
+    dispatch(getSetLoaader(false))
   }
 
   // Get Some Data When Page Load

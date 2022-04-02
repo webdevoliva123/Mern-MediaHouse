@@ -3,7 +3,8 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import DiffSection from '../../components/diffSection/DiffSection'
 import { Protected } from '../../protected/protected';
-import { getLatestBlogsOfPage, getLatestBlogsOfWeb } from '../../redux/action/blogAction';
+import { getLatestBlogsOfPage} from '../../redux/action/blogAction';
+import { getSetLoaader } from '../../redux/action/extraAction';
 
 const Sociology = () => {
   // Make This Page Protected
@@ -17,6 +18,7 @@ const Sociology = () => {
 
   // Get Business Blog from api
   const blogs = async() => {
+    dispatch(getSetLoaader(true))
     await axios({
       method : "GET",
       url : "http://localhost:8080/api/v1/blog/sociologyBlogs",
@@ -26,27 +28,15 @@ const Sociology = () => {
       }
     }).then((res) => {
       dispatch(getLatestBlogsOfPage(res.data.data))
+      dispatch(getSetLoaader(false))
     })
+    dispatch(getSetLoaader(false))
   }
-
-  const latestBlogs = async() => {
-    await axios({
-      method : "GET",
-      url : "http://localhost:8080/api/v1/blog/allBlogs",
-      headers : {
-        "Content-Type" : "application/json",
-        "x-access-token" : token
-      }
-    }).then((res) => {
-      dispatch(getLatestBlogsOfWeb(res.data.data));
-    })
-  } 
 
   // Call all API on useEffect
   useEffect(() => {
     // Get Blogs
     blogs();
-    latestBlogs();
   },[])
 
   // Get Blogs from React-Redux

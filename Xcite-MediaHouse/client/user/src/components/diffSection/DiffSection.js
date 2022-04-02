@@ -3,7 +3,6 @@ import timeSince from '../../time-ago/time-ago'
 
 const DiffSection = ({title,blogs,latestBlog}) => {
     const [showBlogs,setShowBlogs] = useState(20);
-    console.log(showBlogs);
   return (
     <>
         <div className="section_container">

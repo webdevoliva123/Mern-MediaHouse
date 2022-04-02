@@ -100,6 +100,7 @@ const SignIn = () => {
       dispatch(getError(error));
       dispatch(getSuccess(''));
       toast.error("Invalid Email or Password");
+      window.location.reload();
     })
   }
   

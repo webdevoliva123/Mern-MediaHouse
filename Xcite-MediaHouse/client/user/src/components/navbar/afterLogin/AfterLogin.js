@@ -91,9 +91,9 @@ const ResponsiveAppBar = () => {
             variant="h6"
             noWrap
             component="div"
-            sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
+            sx={{ flexGrow: 50, display: { xs: 'flex', md: 'none' } }}
           >
-            LOGO
+            MediaHouse
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex',justifyContent:"flex-end",marginRight:"20px" }}}>
             {React.Children.toArray(pages.map((page) => (

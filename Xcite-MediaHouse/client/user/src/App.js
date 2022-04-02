@@ -1,5 +1,5 @@
 import './App.css';
-import {Route, Routes, useNavigate} from 'react-router-dom'
+import {Route, Routes} from 'react-router-dom'
 import Footer from './components/footer/Footer';
 import SignUp from './Pages/signUp/SignUp';
 import SignIn from './Pages/signIn/SignIn';
@@ -22,6 +22,11 @@ import BeforeLogin from './components/navbar/beforeLogin/BeforeLogin';
 import AfterLogin from './components/navbar/afterLogin/AfterLogin';
 import SingleBlog from './Pages/singleBlog/SingleBlog';
 import News from './Pages/news/News';
+import Loader from './components/loader/Loader';
+import { useEffect } from 'react';
+import { getLatestBlogsOfWeb } from './redux/action/blogAction';
+import axios from 'axios';
+import { getSetLoaader } from './redux/action/extraAction';
 
 
 function App() {
@@ -33,7 +38,29 @@ function App() {
     dispatch(getSetToken(token));
     dispatch(getUserInfo(userInfo));
 
-    
+    // Get Token From REdux
+    const userToken = useSelector((state) => state.userAuth.success);
+
+     //Get All latest Blog
+     const latestBlogs = async() => {
+       dispatch(getSetLoaader(true))
+       await axios({
+         method : "GET",
+         url : "http://localhost:8080/api/v1/blog/allBlogs",
+         headers : {
+           "Content-Type" : "application/json",
+           "x-access-token" : userToken
+          }
+        }).then((res) => {
+          dispatch(getLatestBlogsOfWeb(res.data.data));
+          dispatch(getSetLoaader(false))
+        })
+        dispatch(getSetLoaader(false))
+      }    
+
+      useEffect(() => {
+        latestBlogs();
+      },[])
 
     // Is User Auth. ?
     const authUser = useSelector((state) => state.userAuth.success);
@@ -41,7 +68,9 @@ function App() {
   return (
     <>
         <div className="container" >
-          {authUser ? <AfterLogin /> : <BeforeLogin />}
+        {/* Loader */}
+        <Loader />
+        {authUser ? <AfterLogin /> : <BeforeLogin />}
         <Routes>
           <Route exact path='/' element={!authUser ? <BeforeHome/> : <NotFound />}/>
           <Route exact path='/signUp' element={!authUser  ? <SignUp /> : <NotFound />} />

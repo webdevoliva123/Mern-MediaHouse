@@ -5,7 +5,7 @@ import HomeLatestBlog from '../../components/homeLatestBlog/HomeLatestBlog';
 import HomeSingleBlog from '../../components/homeSingleBlog/HomeSingleBlog';
 import HomeTopBlogOfSection from '../../components/homeTopBlogOfSection/HomeTopBlogOfSection';
 import { Protected } from '../../protected/protected'
-import { getTopBusinessBlog, getTopEconomicBlog, getTopFiveBlog, getTopNewsBlog, getTopOthersBlog, getTopSociologyBlog, getTopTechBlog } from '../../redux/action/blogAction';
+import { getLatestBlogsOfWeb, getTopBusinessBlog, getTopEconomicBlog, getTopFiveBlog, getTopNewsBlog, getTopOthersBlog, getTopSociologyBlog, getTopTechBlog } from '../../redux/action/blogAction';
 const AfterHome = () => {
   // Make This Page Protected
   Protected();
@@ -145,6 +145,7 @@ const AfterHome = () => {
       <HomeTopBlogOfSection login={true} blogs={techBlog ? techBlog : []} section={"Tech Blogs"}/>
       <HomeTopBlogOfSection login={true} blogs={economicBlog ? economicBlog : []} section={"Economic Blogs"}/>
       <HomeTopBlogOfSection login={true} blogs={othersBlog ? othersBlog : []} section={"Other Blogs"}/>
+      {/* <Loader /> */}
     </>
   )
 }
