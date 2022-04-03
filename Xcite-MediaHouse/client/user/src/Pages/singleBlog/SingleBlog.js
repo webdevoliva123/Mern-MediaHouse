@@ -1,6 +1,11 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import {Protected} from '../../protected/protected'
+import { getLatestBlogsOfWeb, getSingleBlogData } from '../../redux/action/blogAction'
+import { getSetLoaader } from '../../redux/action/extraAction'
+import { numFormatter } from '../../time-ago/time-ago'
 
 const SingleBlog = () => {
   Protected()
@@ -8,8 +13,140 @@ const SingleBlog = () => {
   //GOT Blog ID From Url   
   const { id } = useParams();
 
+  // Get Token From React Redux
+  const token = useSelector((state) => state.userAuth.success);
+  // Get User Id From React Redux
+  const userId = useSelector((state) => state.userInfo.id);
+
+  // 
+  const dispatch = useDispatch();
+
+  // get Blog data
+  const getBlog = async() => {
+    await axios({
+      method : "GET",
+      url : `http://localhost:8080/api/v1/blog/${id}`,
+      headers : {
+        "Content-Type" : "application/json",
+        "x-access-token" : token
+      }
+    }).then((res) => {
+      dispatch(getSingleBlogData(res.data.data))
+    })
+  }
+
+  const latestBlogs = async() => {
+    dispatch(getSetLoaader(true))
+    await axios({
+      method : "GET",
+      url : "http://localhost:8080/api/v1/blog/allBlogs",
+      headers : {
+        "Content-Type" : "application/json",
+        "x-access-token" : token
+      },
+      data : JSON.stringify({
+        userId : userId
+      }) 
+    }).then((res) => {
+      dispatch(getLatestBlogsOfWeb(res.data.data));
+      dispatch(getSetLoaader(false))
+    })
+    dispatch(getSetLoaader(false))
+  } 
+
+  useEffect(() => {
+    // Get Blog From Api by Blog Id which get from user paramas
+    getBlog();
+    latestBlogs();
+  },[])
+
+  // get blog data from React redux
+  const blog = useSelector((state) => state?.singleBlog?.blog);
+  const latestBlog = useSelector((state) => state?.latestBlogsOfWeb?.blogs); 
+  let blogs;
+
+  if(latestBlog){
+    blogs = latestBlog;
+  }else{
+    blogs = [];
+  }
+
+  const likes = blog?.blogInfo?.foundBlog?.likes;
   return (
-    <div>{`blog id : ${id}`}</div>
+    <>
+     <div className="section_container">
+            <div className="section_container-divOne">
+               <div className="imgBx">
+                <img src={blog?.blogInfo?.foundBlog?.image} alt={blog?.blogInfo?.foundBlog?.title} />
+               </div>
+            </div>
+            <div className="section_container-divTwo center-row-left-right">
+                <div className="-divTwo__blogsContainer __singleBlogContainer">
+                  <div className="__singleBlogContainer-header center-row-left-right">
+                    <div className='center-row'>
+                      <div className='__jounAvatar'>
+                        <img src={blog?.jounInfo?.avatar} alt={blog?.jounInfo?.name} />
+                      </div>
+                      <div className='__jounInfo center-row-left'>
+                        <div>
+                          <span>{blog?.jounInfo?.name}</span>
+                          <div className='__jounSubsInfo'><span> {numFormatter(blog?.jounInfo?.subscriber)} subscriber</span> </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div className='__shareBlog'>
+                        <ion-icon name="ellipsis-vertical"></ion-icon>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="__singleBlogContainer-body">
+                    <h2>{blog?.blogInfo?.foundBlog?.title}</h2>
+                    <h4>{blog?.blogInfo?.foundBlog?.description}</h4>
+                    <div className="imgBx">
+                      <img src={blog?.blogInfo?.foundBlog?.image} alt={blog?.blogInfo?.foundBlog?.title} />
+                    </div>
+                    <p>
+                      {blog?.blogInfo?.foundBlog?.body}
+                    </p>
+                  </div>
+                  <div className="__singleBlogContainer-footer center-row-left">
+                    <span className='__info-totalLike'>Total likes <span>{numFormatter(likes ? likes.length : 0)}</span></span>
+                    <div className='__controller center-row-left-right'>
+                      <div className='center-row-left'>
+                      <span className='__liked center-row'> <ion-icon name="heart-outline"></ion-icon></span>
+                      <span className='__save center-row'><ion-icon name="bookmark-outline"></ion-icon></span>
+                      </div>
+                      <div>
+                        <ion-icon name="share-social"></ion-icon>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="-divTwo__latestBlogsContainer .center-column-left">
+                    <h1>Latest Blogs</h1>
+                    {
+                        React.Children.toArray(
+                          blogs.map((e,i) => {
+                                if(i<20){
+                                    return (
+                                        <>
+                                            <div className='-divTwo__latestBlogsContainer-blogs'>
+                                                <div className="imgBx">
+                                                    <img src={e?.blogInfo?.image} alt={e?.blogInfo?.title} />
+                                                </div>
+                                                <a href={`/blog/${e?.blogInfo?._id}`}><span>{e?.blogInfo?.title}</span></a>
+                                            </div>
+                                        </>
+                                    )
+                                }
+                            })
+                        )
+                    }
+                </div>
+            </div>
+      </div>
+    </>
   )
 }
 

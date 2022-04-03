@@ -89,3 +89,12 @@ export const latestBlogsOfWeb = (state = {},{type,payload}) => {
             return state
     }
 }
+
+export const singleBlog = (state = {},{type,payload}) => {
+    switch(type){
+        case actionType.SINGLE_BLOG_DATA : 
+            return ({blog : payload})
+        default : 
+            return state
+    }
+}

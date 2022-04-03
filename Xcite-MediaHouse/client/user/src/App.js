@@ -38,30 +38,6 @@ function App() {
     dispatch(getSetToken(token));
     dispatch(getUserInfo(userInfo));
 
-    // Get Token From REdux
-    const userToken = useSelector((state) => state.userAuth.success);
-
-     //Get All latest Blog
-     const latestBlogs = async() => {
-       dispatch(getSetLoaader(true))
-       await axios({
-         method : "GET",
-         url : "http://localhost:8080/api/v1/blog/allBlogs",
-         headers : {
-           "Content-Type" : "application/json",
-           "x-access-token" : userToken
-          }
-        }).then((res) => {
-          dispatch(getLatestBlogsOfWeb(res.data.data));
-          dispatch(getSetLoaader(false))
-        })
-        dispatch(getSetLoaader(false))
-      }    
-
-      useEffect(() => {
-        latestBlogs();
-      },[])
-
     // Is User Auth. ?
     const authUser = useSelector((state) => state.userAuth.success);
 

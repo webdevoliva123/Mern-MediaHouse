@@ -89,3 +89,12 @@ export const getLatestBlogsOfWeb = (data) => {
         }
     )
 }
+
+export const getSingleBlogData = (data) => {
+    return (
+        {
+            type : actionType.SINGLE_BLOG_DATA,
+            payload : data 
+        }
+    )
+}

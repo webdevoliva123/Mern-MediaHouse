@@ -571,6 +571,129 @@ body{
   color: #dc143c;
 }
 
+/* Single Blogs Design */
+.__singleBlogContainer{
+  padding: 0 0 !important;
+}
+
+.__singleBlogContainer-header{
+  width: 100%;
+  padding: 10px 20px;
+  border-bottom:1px solid var(--lighter-grey) ;
+}
+
+.__singleBlogContainer-header .__jounAvatar{
+  width: 70px;
+  height: 70px;
+  border-radius: 50px;
+  margin-right: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.__singleBlogContainer-header .__jounAvatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50px;
+}
+
+.__singleBlogContainer-header .__jounInfo span{
+  font-size: 1.2em;
+}
+
+.__singleBlogContainer-header .__jounInfo .__jounSubsInfo span{
+  font-size: 0.8em;
+  color: #8c8c8c;
+  margin-right: 10px;
+}
+
+.__singleBlogContainer-header .__shareBlog {
+  position: relative;
+}
+
+.__singleBlogContainer-header .__shareBlog ion-icon{
+  font-size: 1.2em;
+  cursor: pointer;
+}
+
+.__singleBlogContainer-body {
+  width: 100%;
+  padding: 20px 20px;
+}
+
+.__singleBlogContainer-body h2{
+  font-weight: 400;
+  font-size: 2em;
+  margin-bottom: 5px;
+}
+
+.__singleBlogContainer-body h4{
+  font-size: 1em;
+  font-weight: 400;
+  color: var(--lighter-black);
+}
+
+.__singleBlogContainer-body .imgBx{
+  width: 100%;
+  height:350px ;
+  margin: 15px 0;
+}
+
+.__singleBlogContainer-body .imgBx img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.__singleBlogContainer-body p{
+  font-size: 0.9em;
+  color: var(--darker-gery);
+}
+
+.__singleBlogContainer-footer{
+  width: 100%;
+  padding: 10px 20px;
+  border-top:1px solid var(--lighter-grey) ;
+  display: block;
+}
+
+.__singleBlogContainer-footer .__info-totalLike{
+  color: var(--darker-gery);
+}
+
+.__singleBlogContainer-footer .__info-totalLike span{
+  font-size: 0.9em;
+}
+
+.__singleBlogContainer-footer .__controller{
+  margin: 10px;
+}
+
+.__singleBlogContainer-footer .__controller ion-icon{
+  font-size: 1.4em;
+  cursor: pointer;
+}
+
+.__singleBlogContainer-footer .__controller div:nth-child(1) ion-icon{
+  margin-right: 10px;
+}
+
+.__singleBlogContainer-footer .__controller .__liked #liked{
+  color: #dc143c;
+}
+
+.__singleBlogContainer-footer .__controller .__liked #unliked{
+  color: var(--black);
+}
+
+.__singleBlogContainer-footer .__controller .__save #saved{
+  color:var(--black);
+}
+
+.__singleBlogContainer-footer .__controller .__save #unsaved{
+  color:var(--black);
+}
+
 /* Footer */
 .footer {
   background: var(--primary-color);
