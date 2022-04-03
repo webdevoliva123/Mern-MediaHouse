@@ -50,16 +50,16 @@ router.route("/user/blog/like").put(verifyToken,userLikeBlog);
 router.route("/user/blog/removeLike").put(verifyToken,userRemoveLikeFromBlog);
 
 // for subscribe to joun by user
-router.route("/user/cont/subscribe").post(verifyToken,subscribeToJoun);
+router.route("/user/cont/subscribe").put(verifyToken,subscribeToJoun);
 
 // for unsubscribe to joun by user
-router.route("/user/cont/unsubscribe").post(verifyToken,unSubscribeToJun);
+router.route("/user/cont/unsubscribe").put(verifyToken,unSubscribeToJun);
 
 // for save blog
-router.route("/user/blog/save/:id").post(verifyToken,saveBlog);
+router.route("/user/blog/save/:id").put(verifyToken,saveBlog);
 
 // for unsave blog
-router.route("/user/blog/unsave/:id").post(verifyToken,unsaveBlog);
+router.route("/user/blog/unsave/:id").put(verifyToken,unsaveBlog);
 
 //for forget password of user
 router.route("/user/forgetPassword").post(forgetPasswordUser);

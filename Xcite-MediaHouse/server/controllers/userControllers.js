@@ -522,13 +522,14 @@ const saveBlog = asyncHandler(async (req,res) => {
     const user = await User.findById(userId);
 
     if(user){
-        const alreadySavedBlog = user.saveBlogs.map((e) => {
+        const savedBlog = []
+        user.saveBlogs.map((e) => {
             if(e === blogId){
-                return e
+                saveBlog.push(e)
             }
         })
 
-        if(alreadySavedBlog.length <= 0){
+        if(savedBlog.length <= 0){
             try {
                 await User.updateOne({id : Object(blogId)},{$push : {saveBlogs : blogId}})
                 return res.status(200).json({
