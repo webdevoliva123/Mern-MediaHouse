@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import {Protected} from '../../protected/protected'
@@ -16,7 +16,7 @@ const SingleBlog = () => {
   // Get Token From React Redux
   const token = useSelector((state) => state.userAuth.success);
   // Get User Id From React Redux
-  const userId = useSelector((state) => state.userInfo.id);
+  const userId = useSelector((state) => state.userInfo.userInfoInitial.id);
 
   // 
   const dispatch = useDispatch();
@@ -24,14 +24,19 @@ const SingleBlog = () => {
   // get Blog data
   const getBlog = async() => {
     await axios({
-      method : "GET",
+      method : "POST",
       url : `http://localhost:8080/api/v1/blog/${id}`,
       headers : {
         "Content-Type" : "application/json",
         "x-access-token" : token
-      }
+      },
+      data : JSON.stringify({
+        userId : userId
+      })
     }).then((res) => {
       dispatch(getSingleBlogData(res.data.data))
+    }).catch((err) => {
+      console.log(err);
     })
   }
 
@@ -43,10 +48,7 @@ const SingleBlog = () => {
       headers : {
         "Content-Type" : "application/json",
         "x-access-token" : token
-      },
-      data : JSON.stringify({
-        userId : userId
-      }) 
+      }
     }).then((res) => {
       dispatch(getLatestBlogsOfWeb(res.data.data));
       dispatch(getSetLoaader(false))
@@ -71,7 +73,75 @@ const SingleBlog = () => {
     blogs = [];
   }
 
+  // counting Total length
   const likes = blog?.blogInfo?.foundBlog?.likes;
+
+
+  const likeFun = async() => {
+    const body = JSON.stringify({
+      blogId : id,
+      userId : userId
+    })
+    if(blog?.blogInfo?.thieUserLiked !== true){
+      await axios({
+        method : "PUT",
+        url : "http://localhost:8080/api/v1/user/blog/like",
+        headers : {
+          "Content-Type" : "application/json",
+          "x-access-token" : token
+        },
+        data : body
+      }).then(() => {
+        window.location.reload();
+      })
+    }else{
+      await axios({
+        method : "PUT",
+        url : "http://localhost:8080/api/v1/user/blog/removeLike",
+        headers : {
+          "Content-Type" : "application/json",
+          "x-access-token" : token
+        },
+        data : body
+      }).then(() => {
+        window.location.reload();
+      })
+    }
+  }
+
+  const saveFun = async() => {
+    const body = JSON.stringify({
+      userId : userId
+    })
+    if(blog?.blogInfo?.thisUserSaved !== true){
+      await axios({
+        method : "PUT",
+        url : `http://localhost:8080/api/v1/user/blog/save/${id}`,
+        headers : {
+          "Content-Type" : "application/json",
+          "x-access-token" : token
+        },
+        data : body
+      }).then(() => {
+        window.location.reload();
+      })
+    }else{
+      await axios({
+        method : "PUT",
+        url : `http://localhost:8080/api/v1/user/blog/unsave/${id}`,
+        headers : {
+          "Content-Type" : "application/json",
+          "x-access-token" : token
+        },
+        data : body
+      }).then(() => {
+        window.location.reload();
+      })
+    }
+  }
+
+
+
   return (
     <>
      <div className="section_container">
@@ -114,8 +184,8 @@ const SingleBlog = () => {
                     <span className='__info-totalLike'>Total likes <span>{numFormatter(likes ? likes.length : 0)}</span></span>
                     <div className='__controller center-row-left-right'>
                       <div className='center-row-left'>
-                      <span className='__liked center-row'> <ion-icon name="heart-outline"></ion-icon></span>
-                      <span className='__save center-row'><ion-icon name="bookmark-outline"></ion-icon></span>
+                      <span className='__liked center-row' onClick={likeFun}> <ion-icon name={blog?.blogInfo?.thieUserLiked === true ? "heart" : "heart-outline"} id={blog?.blogInfo?.thieUserLiked === true ? "liked" : "unliked"}></ion-icon></span>
+                      <span className='__save center-row' onClick={saveFun}><ion-icon name={blog?.blogInfo?.thisUserSaved  === true ? "bookmark" : "bookmark-outline"} id={blog?.blogInfo?.thisUserSaved  === true ? "saved" : "unsaved"}></ion-icon></span>
                       </div>
                       <div>
                         <ion-icon name="share-social"></ion-icon>

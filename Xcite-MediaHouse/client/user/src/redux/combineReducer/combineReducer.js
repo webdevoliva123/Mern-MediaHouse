@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux'
 import { latestBlogsOfPage, latestBlogsOfWeb, singleBlog, topBusinessBlog, topEconomicBlog, topFiveBlog, topLatestBlog, topNewsBlog, topOthersBlog, topSociologyBlog, topTechBlog } from '../reducers/blogReducers'
-import { setLoader } from '../reducers/extraReducers'
+import { setLike, setLoader, setSave, setSubs } from '../reducers/extraReducers'
 import { userAuth, userInfo } from '../reducers/userReducers'
 
 const comAllReducer = combineReducers({
@@ -17,7 +17,10 @@ const comAllReducer = combineReducers({
     latestBlogsOfPage : latestBlogsOfPage,
     latestBlogsOfWeb : latestBlogsOfWeb,
     getLoader : setLoader,
-    singleBlog : singleBlog
+    singleBlog : singleBlog,
+    setLike : setLike,
+    setSave : setSave,
+    setSubs : setSubs
 })
 
 

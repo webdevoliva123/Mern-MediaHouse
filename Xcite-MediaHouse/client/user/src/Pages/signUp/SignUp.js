@@ -78,7 +78,7 @@ const SignUp = () => {
 
       const passRegEx = /^[A-Za-z]\w{7,14}$/;
       if(!passRegEx.test(userData.password)){
-          return toast.warning("Password Must have Grater Than * Char. And have atleast one number, one uppercase and one lowercase letter")
+          return toast.warning("Password Must have Grater Than 8 Char. And have atleast one number, one uppercase and one lowercase letter")
       }
 
 

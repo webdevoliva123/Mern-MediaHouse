@@ -1,5 +1,5 @@
-import actionType from "../constant/actionType"
 
+import actionType from "../constant/actionType"
 export const getTopLatestBlog = (data) => {
     return (
         {
