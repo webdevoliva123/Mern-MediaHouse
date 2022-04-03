@@ -53,7 +53,7 @@ router.route("/blog/economicBlogs").get(verifyToken,getAllEconomicBlogs);
 router.route("/blog/otherBlogs").get(verifyToken,getAllOtherBlogs);
 
 // get blog by blog id
-router.route("/blog/:id").get(verifyToken,getBlogById);
+router.route("/blog/:id").post(verifyToken,getBlogById);
 
 // get all lastest blog of joun by id
 router.route("/joun/blog/:id").get(verifyToken,getAllBlogsOfJounById);

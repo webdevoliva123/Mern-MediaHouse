@@ -44,10 +44,10 @@ router.route("/user/update/email").put(verifyToken,updateUserEmail);
 router.route("/user/update/password").put(verifyToken,updateUserPassword);
 
 // for like blog by user
-router.route("/user/blog/like").post(verifyToken,userLikeBlog);
+router.route("/user/blog/like").put(verifyToken,userLikeBlog);
 
 // for remove like from blog by user
-router.route("/user/blog/removeLike").post(verifyToken,userRemoveLikeFromBlog);
+router.route("/user/blog/removeLike").put(verifyToken,userRemoveLikeFromBlog);
 
 // for subscribe to joun by user
 router.route("/user/cont/subscribe").post(verifyToken,subscribeToJoun);

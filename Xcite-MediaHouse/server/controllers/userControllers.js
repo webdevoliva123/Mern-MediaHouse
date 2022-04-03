@@ -281,7 +281,6 @@ const updateUserPassword = asyncHandler(async (req,res) => {
 // User Like Blog
 const userLikeBlog = asyncHandler(async (req,res) => {
     const {blogId,userId} = req.body;
-
     const user = await User.findById(userId);
 
     if(user){
@@ -306,8 +305,8 @@ const userLikeBlog = asyncHandler(async (req,res) => {
        const isUserAlreadyLiked = userAlreadyLiked.length <= 0 ? true : false;
         if(isBlogAlreadyLiked && isUserAlreadyLiked){
             try {
-                await Blog.updateOne({_id : blogId},{$push : {likes : userId}})
-                await User.updateOne({_id : userId},{$push : {likedBlogs : blogId}})
+                await Blog.updateOne({_id : Object(blogId)},{$push : {likes : userId}})
+                await User.updateOne({_id : Object(userId)},{$push : {likedBlogs : blogId}})
 
                 res.status(200).json({
                     success : true,
@@ -366,8 +365,8 @@ const userRemoveLikeFromBlog = asyncHandler(async (req,res) => {
        const isUserAlreadyLiked = userAlreadyLiked.length > 0 ? true : false;
         if(isBlogAlreadyLiked && isUserAlreadyLiked){
             try {
-            await Blog.updateOne({_id : blogId},{$pull : {likes : userId}})
-            await User.updateOne({_id : userId},{$pull : {likedBlogs : blogId}})
+            await Blog.updateOne({_id : Object(blogId)},{$pull : {likes : userId}})
+            await User.updateOne({_id : Object(userId)},{$pull : {likedBlogs : blogId}})
             res.status(200).json({
                 success : true,
                 message : "Blog found & removeLiked",
