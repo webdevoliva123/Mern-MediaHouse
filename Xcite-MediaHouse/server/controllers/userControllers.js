@@ -516,6 +516,84 @@ const unSubscribeToJun = asyncHandler(async (req,res) => {
     }
 })
 
+// save Blog
+const saveBlog = asyncHandler(async (req,res) => {
+    const blogId = req.params.id;
+    const { userId } =  req.body
+    const user = await User.findById(userId);
+
+    if(user){
+        const alreadySavedBlog = user.saveBlogs.map((e) => {
+            if(e === blogId){
+                return e
+            }
+        })
+
+        if(alreadySavedBlog.length <= 0){
+            try {
+                await User.updateOne({id : Object(blogId)},{$push : {saveBlogs : blogId}})
+                return res.status(200).json({
+                    success : true,
+                    message : "blog Saved"
+                })
+            } catch (error) {
+                console.log(error);
+            }
+        }else{
+            return res.status(401).json({
+                success : false,
+                message : "Blog Is Already Saved"
+            })
+        }
+
+    }else{
+        return res.status(404).json({
+            success : false,
+            message : "User Not Found"
+        })
+    }
+
+})
+
+// unsave Blog
+const unsaveBlog = asyncHandler(async (req,res) => {
+    const blogId = req.params.id;
+    const { userId } =  req.body
+    const user = await User.findById(userId);
+
+    if(user){
+        const alreadySavedBlog = user.saveBlogs.map((e) => {
+            if(e === blogId){
+                return e
+            }
+        })
+
+        if(alreadySavedBlog.length > 0){
+            try {
+                await User.updateOne({id : Object(blogId)},{$pull : {saveBlogs : blogId}})
+                return res.status(200).json({
+                    success : true,
+                    message : "blog unsaved"
+                })
+            } catch (error) {
+                console.log(error);
+            }
+        }else{
+            return res.status(401).json({
+                success : false,
+                message : "Blog Is Already unSaved"
+            })
+        }
+
+    }else{
+        return res.status(404).json({
+            success : false,
+            message : "User Not Found"
+        })
+    }
+
+})
+
 
 module.exports = { registerUser,
      userLogin,
@@ -528,5 +606,7 @@ module.exports = { registerUser,
      unSubscribeToJun,
      forgetPasswordUser,
      authForResetPassPage,
-     resetPassword
+     resetPassword,
+     saveBlog,
+     unsaveBlog
     };

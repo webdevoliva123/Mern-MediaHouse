@@ -14,6 +14,8 @@ const {
     authForResetPassPage,
     resetPassword,
     userLikeBlog,
+    saveBlog,
+    unsaveBlog,
 } = require("../controllers/userControllers");
 
 const verifyToken = require('../middlewares/verifyToken');
@@ -42,7 +44,6 @@ router.route("/user/update/email").put(verifyToken,updateUserEmail);
 router.route("/user/update/password").put(verifyToken,updateUserPassword);
 
 // for like blog by user
-// router.route("/user/blog/like").post(verifyToken,userLikeBlogUpUser);
 router.route("/user/blog/like").post(verifyToken,userLikeBlog);
 
 // for remove like from blog by user
@@ -53,6 +54,12 @@ router.route("/user/cont/subscribe").post(verifyToken,subscribeToJoun);
 
 // for unsubscribe to joun by user
 router.route("/user/cont/unsubscribe").post(verifyToken,unSubscribeToJun);
+
+// for save blog
+router.route("/user/blog/save/:id").post(verifyToken,saveBlog);
+
+// for unsave blog
+router.route("/user/blog/unsave/:id").post(verifyToken,unsaveBlog);
 
 //for forget password of user
 router.route("/user/forgetPassword").post(forgetPasswordUser);

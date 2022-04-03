@@ -36,6 +36,12 @@ const userSchema = mongoose.Schema(
                 type : String,
                 required : true
             }
+        ],
+        saveBlogs : [
+            {
+                type : String,
+                required : true
+            }
         ]
     },
     {
