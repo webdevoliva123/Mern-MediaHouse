@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const Blog = require("../models/blogModel");
 const Journalist = require("../models/jounModel");
+const User = require('../models/userModel');
 
 // Get blogs by tags
 const getBlogByTag = asyncHandler(async (req,res) => {
@@ -380,13 +381,17 @@ const getAllOtherBlogs = asyncHandler(async (req, res) => {
 
 // Get blog by blog id
 const getBlogById = asyncHandler(async (req, res) => {
-    const foundBlog = await Blog.findById(req.params.id);
-    const userId = req.userId;
+    const blogId = req.params.id;
+    const foundBlog = await Blog.findById(blogId);
+    const { userId } = req.body;
     if (foundBlog) {
         const journalist = await Journalist.findById(foundBlog.jounId);
-        
+        const user = await User.findById(userId);
+
         const subs = [];
         const liked = [];
+        const save = [];
+
         
         // Check If user Subscribed This Blog Or Not
         journalist.subscribe.map((e) => {
@@ -396,13 +401,20 @@ const getBlogById = asyncHandler(async (req, res) => {
         })
 
         // Check If user Liked This Blog Or Not
-        foundBlog.likes.map((e) => {
-            if(e === userId){
+        user.likedBlogs.map((e) => {
+            if(e === blogId){
                 liked.push(e);
             }
         })
 
-        const data = {blogInfo : {foundBlog, thieUserLiked : subs.length > 0 ? true : false } ,jounInfo : {avatar : journalist.profilePicture,name : journalist.name, subscriber : journalist.subscribe.length, thisUserSubscribed : liked.length > 0 ? true : false}}
+        // Check If user Save This Blog Or Not
+        user.saveBlogs.map((e) => {
+            if(e === blogId){
+                save.push(e);
+            }
+        })
+
+        const data = {blogInfo : {foundBlog, thieUserLiked : liked.length > 0 ? true : false, thisUserSaved : save.length > 0 ? true : false } ,jounInfo : {_id : journalist._id ,avatar : journalist.profilePicture,name : journalist.name, subscriber : journalist.subscribe.length, thisUserSubscribed : subs.length > 0 ? true : false}}
         res.status(200).json({
             success: true,
             data
