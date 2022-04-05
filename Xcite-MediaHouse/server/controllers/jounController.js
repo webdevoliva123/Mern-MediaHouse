@@ -3,6 +3,7 @@ const Journalist = require('../models/jounModel');
 const bycrpt = require('bcryptjs');
 const generateToken = require("../middlewares/generateToken");
 const Blog = require("../models/blogModel");
+const User = require("../models/userModel");
 const nodeMailSender = require("../middlewares/mailSender");
 const JWT = require('jsonwebtoken')
 
@@ -91,9 +92,20 @@ const jounLogin = asyncHandler(async(req,res) => {
 // Get Journalist name By Id
 const getJounById = asyncHandler(asyncHandler (async(req,res) => {
     const jounId = req.params.id
-    const journalist = await Journalist.findById(jounId);
+    const userId = req.params.userId
 
+    const journalist = await Journalist.findById(jounId);
     if (Journalist) {
+        const user = await User.findById(userId);
+        const blog = await Blog.find({jounId : Object(jounId)});
+
+        const subs = [];
+        user.subscribed.map((e) => {
+            if(e == jounId){
+                subs.push(e);
+            }
+        })
+
         res.status(200).json({
             success: true,
             data: 
@@ -101,7 +113,10 @@ const getJounById = asyncHandler(asyncHandler (async(req,res) => {
                 id : journalist._id,
                 name : journalist.name,
                 email : journalist.email,
-                avatar : journalist.profilePicture
+                avatar : journalist.profilePicture,
+                totalSubs :  journalist.subscribe.length,
+                isThisUserSubs : subs.length > 0 ? true : false, 
+                jounBlogs : blog
             },
         });
     } else {

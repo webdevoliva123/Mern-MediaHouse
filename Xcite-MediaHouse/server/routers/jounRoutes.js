@@ -26,6 +26,9 @@ router.route("/joun/update/password").put(protectedForJoun,updateJounPassword);
 router.route("/joun/update/blog").put(protectedForJoun,updateBlogOfJounByJoun);
 
 // For Finding Journalist By Id
+router.route("/joun/:id/user/:userId").get(getJounById);
+
+// For Finding Journalist By Id
 router.route("/joun/search/:id").get(getJounById);
 
 // For Finding Journalist By Name
