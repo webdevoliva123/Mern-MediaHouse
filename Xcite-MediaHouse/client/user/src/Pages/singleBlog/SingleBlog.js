@@ -1,10 +1,10 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import {Protected} from '../../protected/protected'
 import { getLatestBlogsOfWeb, getSingleBlogData } from '../../redux/action/blogAction'
-import { getSetLoaader } from '../../redux/action/extraAction'
+import { getSetLoaader, getShareLink } from '../../redux/action/extraAction'
 import { numFormatter } from '../../time-ago/time-ago'
 
 const SingleBlog = () => {
@@ -20,6 +20,7 @@ const SingleBlog = () => {
 
   // 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // get Blog data
   const getBlog = async() => {
@@ -53,7 +54,6 @@ const SingleBlog = () => {
       dispatch(getLatestBlogsOfWeb(res.data.data));
       dispatch(getSetLoaader(false))
     })
-    dispatch(getSetLoaader(false))
   } 
 
   useEffect(() => {
@@ -140,7 +140,23 @@ const SingleBlog = () => {
     }
   }
 
+  // Pop More Option
+  const [moreOption,setMoreOption] = useState(false);
 
+  // on Share
+  const onShare = () => {
+    dispatch(getShareLink({share : true, link : `http://${window.location.host}/blog/${blog?.blogInfo?.foundBlog?._id}`}))
+  }
+
+  // View Profile 
+  const viewProfile = () => {
+    navigate(`/journalist/${blog?.jounInfo?._id}`)
+  } 
+
+  // Share joun profile
+  const shareJoun = () => {
+    dispatch(getShareLink({share : true, link : `http://${window.location.host}/journalist/${blog?.jounInfo?._id}`}))
+  }
 
   return (
     <>
@@ -159,14 +175,18 @@ const SingleBlog = () => {
                       </div>
                       <div className='__jounInfo center-row-left'>
                         <div>
-                          <span>{blog?.jounInfo?.name}</span>
+                          <a href={`/journalist/${blog?.jounInfo?._id}`}><span>{blog?.jounInfo?.name}</span></a>
                           <div className='__jounSubsInfo'><span> {numFormatter(blog?.jounInfo?.subscriber)} subscriber</span> </div>
                         </div>
                       </div>
                     </div>
                     <div>
-                      <div className='__shareBlog'>
-                        <ion-icon name="ellipsis-vertical"></ion-icon>
+                      <div className='__shareBlog' style={{position:"relative"}}>
+                        <span className='__moreOption center-row' onClick={() => {setMoreOption(!moreOption)}}><ion-icon name="ellipsis-vertical"></ion-icon></span>
+                        <div style={moreOption === true ? {position:'absolute',width:"160px",bottom:"-80px",right:"-160px",background:"var(--black)",padding:"10px 0",display:"block"} : {display:'none',visibility:"hidden"}}>
+                          <span style={{background:"var(--primary-color)",width:"100%",padding:"5px 10px",display:"block",color:"var(--lighter-grey)",fontWeight:"300",fontSize:"0.8em",cursor:"pointer"}} onClick={viewProfile}>View Profile</span>
+                          <span style={{background:"var(--primary-color)",width:"100%",padding:"5px 10px",display:"block",color:"var(--lighter-grey)",fontWeight:"300",fontSize:"0.8em",cursor:"pointer"}} onClick={shareJoun}>Share Journalist</span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -188,7 +208,7 @@ const SingleBlog = () => {
                       <span className='__save center-row' onClick={saveFun}><ion-icon name={blog?.blogInfo?.thisUserSaved  === true ? "bookmark" : "bookmark-outline"} id={blog?.blogInfo?.thisUserSaved  === true ? "saved" : "unsaved"}></ion-icon></span>
                       </div>
                       <div>
-                        <ion-icon name="share-social"></ion-icon>
+                        <span className='__share center-row' onClick={onShare}><ion-icon name="share-social"></ion-icon></span>
                       </div>
                     </div>
                   </div>

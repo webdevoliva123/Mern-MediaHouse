@@ -1,8 +1,12 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
+import { getShareLink } from '../../redux/action/extraAction';
 import timeSince from '../../time-ago/time-ago'
 
 const DiffSection = ({title,blogs,latestBlog}) => {
     const [showBlogs,setShowBlogs] = useState(20);
+    const dispatch = useDispatch();
+
   return (
     <>
         <div className="section_container">
@@ -22,6 +26,10 @@ const DiffSection = ({title,blogs,latestBlog}) => {
                         React.Children.toArray(
                             blogs.map((e,i) => {
                                 if(i < showBlogs){
+                                    const onShare = () =>{ 
+                                        dispatch(getShareLink({share : true , link : `http://${window.location.host}/blog/${e?.blogInfo?._id}`}))
+                                    }
+
                                     return (
                                         <>
                                            <div className='-divTwo__blogsContainer-blogs'>
@@ -34,7 +42,7 @@ const DiffSection = ({title,blogs,latestBlog}) => {
                                                         </div>
                                                     </div>
                                                     <div className="center-row">
-                                                        <ion-icon name="ellipsis-vertical"></ion-icon>
+                                                       <span className='__moreOption center-row' onClick={onShare}> <ion-icon name="ellipsis-vertical"></ion-icon></span>
                                                     </div>
                                                 </div>
                                                 <div className="hr"></div>

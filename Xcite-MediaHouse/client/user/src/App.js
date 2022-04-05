@@ -23,10 +23,8 @@ import AfterLogin from './components/navbar/afterLogin/AfterLogin';
 import SingleBlog from './Pages/singleBlog/SingleBlog';
 import News from './Pages/news/News';
 import Loader from './components/loader/Loader';
-import { useEffect } from 'react';
-import { getLatestBlogsOfWeb } from './redux/action/blogAction';
-import axios from 'axios';
-import { getSetLoaader } from './redux/action/extraAction';
+import ShareLink from './components/shareLink/ShareLink';
+import JounProfile from './Pages/journalistProfile/JounProfile';
 
 
 function App() {
@@ -46,24 +44,27 @@ function App() {
         <div className="container" >
         {/* Loader */}
         <Loader />
+        {/* Share */}
+        <ShareLink />
         {authUser ? <AfterLogin /> : <BeforeLogin />}
         <Routes>
           <Route exact path='/' element={!authUser ? <BeforeHome/> : <NotFound />}/>
           <Route exact path='/signUp' element={!authUser  ? <SignUp /> : <NotFound />} />
           <Route exact path='/signIn' element={!authUser  ? <SignIn /> : <NotFound />} />
           <Route exact path='/forgetPassword' element={!authUser ? <ForgetPassword /> : <NotFound />} />
-          <Route exact path='/home' element={authUser ? <AfterHome />  : <NotFound />}/>
-          <Route exact path='/news' element={authUser ? <News />  : <NotFound />}/>
-          <Route exact path='/business' element={authUser ? <Business />  : <NotFound />}/>
-          <Route exact path='/sociology' element={authUser ? <Sociology />  : <NotFound />}/>
-          <Route exact path='/tech' element={authUser ? <Tech />  : <NotFound />}/>
-          <Route exact path='/economic' element={authUser ? <Economic />  : <NotFound />}/>
-          <Route exact path='/others' element={authUser ? <Others />  : <NotFound />}/>
-          <Route exact path='/blog/:id' element={authUser ? <SingleBlog />  : <NotFound />}/>
-          <Route exact path='/profile' element={authUser ? <Profile />  : <NotFound />}/>
-          <Route exact path='/account' element={authUser ? <UserAccount />  : <NotFound />}/>
-          <Route exact path='/dashboard' element={authUser ? <UserDashboard />  : <NotFound />}/>
-          <Route exact path='/logout' element={authUser ? <Logout />  : <NotFound />}/>
+          <Route exact path='/home' element={authUser ? <AfterHome />  : <SignIn />}/>
+          <Route exact path='/news' element={authUser ? <News />  : <SignIn />}/>
+          <Route exact path='/business' element={authUser ? <Business />  : <SignIn />}/>
+          <Route exact path='/sociology' element={authUser ? <Sociology />  : <SignIn />}/>
+          <Route exact path='/tech' element={authUser ? <Tech />  : <SignIn />}/>
+          <Route exact path='/economic' element={authUser ? <Economic />  : <SignIn />}/>
+          <Route exact path='/others' element={authUser ? <Others />  : <SignIn />}/>
+          <Route exact path='/blog/:id' element={authUser ? <SingleBlog />  : <SignIn />}/>
+          <Route exact path='/journalist/:id' element={authUser ? <JounProfile />  : <SignIn />}/>
+          <Route exact path='/profile' element={authUser ? <Profile />  : <SignIn />}/>
+          <Route exact path='/account' element={authUser ? <UserAccount />  : <SignIn />}/>
+          <Route exact path='/dashboard' element={authUser ? <UserDashboard />  : <SignIn />}/>
+          <Route exact path='/logout' element={authUser ? <Logout />  : <SignIn />}/>
         </Routes>
         <Footer />
       </div>

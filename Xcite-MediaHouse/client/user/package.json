@@ -1,6 +1,6 @@
 {
   "name": "user",
-  "proxy" : "http://localhost:8080",
+  "proxy": "http://localhost:8080",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -22,7 +22,9 @@
     "react-redux": "^7.2.6",
     "react-router-dom": "^6.2.2",
     "react-scripts": "5.0.0",
+    "react-share": "^4.4.0",
     "react-toastify": "^8.2.0",
+    "react-tooltip": "^4.2.21",
     "redux": "^4.1.2",
     "web-vitals": "^2.1.4"
   },

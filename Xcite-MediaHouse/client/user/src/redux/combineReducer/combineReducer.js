@@ -1,11 +1,13 @@
 import {combineReducers} from 'redux'
 import { latestBlogsOfPage, latestBlogsOfWeb, singleBlog, topBusinessBlog, topEconomicBlog, topFiveBlog, topLatestBlog, topNewsBlog, topOthersBlog, topSociologyBlog, topTechBlog } from '../reducers/blogReducers'
-import { setLike, setLoader, setSave, setSubs } from '../reducers/extraReducers'
+import { setLoader,setShareLink } from '../reducers/extraReducers'
 import { userAuth, userInfo } from '../reducers/userReducers'
+import {jounInfo} from '../reducers/jounReducers'
 
 const comAllReducer = combineReducers({
     userAuth : userAuth,
     userInfo : userInfo,
+    jounInfo : jounInfo,
     topLatestBlog : topLatestBlog,
     topFiveBlog : topFiveBlog,
     topNewsBlog : topNewsBlog,
@@ -18,9 +20,7 @@ const comAllReducer = combineReducers({
     latestBlogsOfWeb : latestBlogsOfWeb,
     getLoader : setLoader,
     singleBlog : singleBlog,
-    setLike : setLike,
-    setSave : setSave,
-    setSubs : setSubs
+    setShareLink : setShareLink,
 })
 
 
