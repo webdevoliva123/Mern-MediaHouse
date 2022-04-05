@@ -400,6 +400,8 @@ const userRemoveLikeFromBlog = asyncHandler(async (req,res) => {
 const subscribeToJoun = asyncHandler(async (req,res) => {
     const {jounId,userId} = req.body;
 
+    console.log(jounId,userId);
+
     const user = await User.findById(userId);
 
     if(user){

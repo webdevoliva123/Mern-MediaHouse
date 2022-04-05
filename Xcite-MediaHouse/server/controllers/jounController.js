@@ -106,6 +106,11 @@ const getJounById = asyncHandler(asyncHandler (async(req,res) => {
             }
         })
 
+        const blogs = [];
+        for(let i = 0; i < blog.length; i++){
+            blogs.push(blog[blog.length - (i+1)])
+        }
+
         res.status(200).json({
             success: true,
             data: 
@@ -116,7 +121,7 @@ const getJounById = asyncHandler(asyncHandler (async(req,res) => {
                 avatar : journalist.profilePicture,
                 totalSubs :  journalist.subscribe.length,
                 isThisUserSubs : subs.length > 0 ? true : false, 
-                jounBlogs : blog
+                jounBlogs : blogs
             },
         });
     } else {
@@ -131,9 +136,6 @@ const getJounById = asyncHandler(asyncHandler (async(req,res) => {
 const getJounByName = asyncHandler(async (req,res) => {
     console.log(req.params.search);
     const journalist = await Journalist.findOne({ name : req.params.search });
-
-    console.log(journalist);
-
     if (Journalist) {
         res.status(200).json({
             success: true,
