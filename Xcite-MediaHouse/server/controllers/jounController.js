@@ -90,7 +90,31 @@ const jounLogin = asyncHandler(async(req,res) => {
 })
 
 // Get Journalist name By Id
-const getJounById = asyncHandler(asyncHandler (async(req,res) => {
+const getJounInfoById = asyncHandler(asyncHandler (async(req,res) => {
+    const jounId = req.params.id
+
+    const journalist = await Journalist.findById(jounId);
+    if (Journalist) {
+        res.status(200).json({
+            success: true,
+            data: 
+            {
+                id : journalist._id,
+                name : journalist.name,
+                email : journalist.email,
+                avatar : journalist.profilePicture,
+            },
+        });
+    } else {
+        return res.status(404).json({
+            success: false,
+            error: "No Journalist Found",
+        });
+    }
+}))
+
+// Get Journalist name By Id
+const getJounDetailsById = asyncHandler(asyncHandler (async(req,res) => {
     const jounId = req.params.id
     const userId = req.params.userId
 
@@ -521,7 +545,8 @@ module.exports = {
     updateJounName , 
     updateJounAvatar , 
     getJounByName , 
-    getJounById,
+    getJounInfoById,
+    getJounDetailsById,
     updateJounEmail , 
     updateJounPassword , 
     getAllBlogsOfJounById, 

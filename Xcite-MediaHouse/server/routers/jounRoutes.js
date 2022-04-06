@@ -1,5 +1,5 @@
 const express = require("express");
-const { jounRegister, jounLogin, updateJounName, getJounByName, updateJounEmail, updateJounAvatar, updateJounPassword, getAllBlogsOfJounById, updateBlogOfJounByJoun, totalBlogOfJoun, totalLikeOfJoun, totalSubsOfJoun, forgetPasswordJoun, authForResetPassPageJoun, resetPasswordJoun, getJounById } = require("../controllers/jounController");
+const { jounRegister, jounLogin, updateJounName, getJounByName, updateJounEmail, updateJounAvatar, updateJounPassword, getAllBlogsOfJounById, updateBlogOfJounByJoun, totalBlogOfJoun, totalLikeOfJoun, totalSubsOfJoun, forgetPasswordJoun, authForResetPassPageJoun, resetPasswordJoun, getJounInfoById, getJounDetailsById } = require("../controllers/jounController");
 const { protectedForJoun } = require("../middlewares/protectedRoutes");
 const verifyToken = require("../middlewares/verifyToken");
 const router = express.Router();
@@ -26,10 +26,10 @@ router.route("/joun/update/password").put(protectedForJoun,updateJounPassword);
 router.route("/joun/update/blog").put(protectedForJoun,updateBlogOfJounByJoun);
 
 // For Finding Journalist By Id
-router.route("/joun/:id/user/:userId").get(getJounById);
+router.route("/joun/:id/user/:userId").get(getJounDetailsById);
 
 // For Finding Journalist By Id
-router.route("/joun/search/:id").get(getJounById);
+router.route("/joun/search/:id").get(getJounInfoById);
 
 // For Finding Journalist By Name
 router.route("/joun/search/name/:search").get(getJounByName);
