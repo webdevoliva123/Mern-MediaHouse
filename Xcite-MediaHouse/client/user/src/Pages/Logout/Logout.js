@@ -23,7 +23,7 @@ const Logout = () => {
           </div>
           <div className="__container-logoutContent center-row">
             <div className='center-column'>
-              <h1>Are you sure you want to logou?</h1>
+              <h1>Are you sure you want to logout?</h1>
               <button onClick={onLogout} >Logout</button>
             </div>
           </div>
