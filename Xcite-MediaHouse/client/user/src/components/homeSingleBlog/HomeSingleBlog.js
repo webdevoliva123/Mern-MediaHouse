@@ -9,6 +9,7 @@ const HomeSingleBlog = ({login}) => {
   // 
   const dispatch = useDispatch();
   const [jounName,setJounName] = useState("");
+
   // Get Some Lastest Blog On
   const get7lastestBlog = async() => {
     dispatch(getSetLoaader(true))
@@ -55,6 +56,8 @@ const HomeSingleBlog = ({login}) => {
 
   //get current Time&Date   
   const timeAndDate = getCurrentTime_Date(new Date());
+
+  console.log(jounName);
 
   return (
     <div className="lastestSingleBlog__container">

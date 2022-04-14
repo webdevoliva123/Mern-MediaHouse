@@ -92,7 +92,7 @@ const SingleBlog = () => {
         },
         data : body
       }).then(() => {
-        window.location.reload();
+        // window.location.reload();
       })
     }else{
       await axios({
