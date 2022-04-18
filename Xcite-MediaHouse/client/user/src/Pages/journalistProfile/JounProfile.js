@@ -19,7 +19,7 @@ const JounProfile = () => {
     const JounInfo = async() => {
         await axios({
             method : "GET",
-            url : `http://localhost:8080/api/v2/joun/${id}/user/${userInfo?.id}`,
+            url : `https://mernmedia-house.herokuapp.com/api/v2/joun/${id}/user/${userInfo?.id}`,
             headers : {
                 "Content-Type" : "application/json"
             }
@@ -51,7 +51,7 @@ const JounProfile = () => {
         if(journalist?.isThisUserSubs === false){
             await axios({
                 method : "PUT",
-                url : `http://localhost:8080/api/v1/user/cont/subscribe`,
+                url : `https://mernmedia-house.herokuapp.com/api/v1/user/cont/subscribe`,
                 headers : {
                     "Content-Type" : "application/json",
                     "x-access-token" : token
@@ -61,7 +61,7 @@ const JounProfile = () => {
         }else{
             await axios({
                 method : "PUT",
-                url : `http://localhost:8080/api/v1/user/cont/unsubscribe`,
+                url : `https://mernmedia-house.herokuapp.com/api/v1/user/cont/unsubscribe`,
                 headers : {
                     "Content-Type" : "application/json",
                     "x-access-token" : token

@@ -2,13 +2,11 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
-import {Protected} from '../../protected/protected'
 import { getLatestBlogsOfWeb, getSingleBlogData } from '../../redux/action/blogAction'
 import { getSetLoaader, getShareLink } from '../../redux/action/extraAction'
 import { numFormatter } from '../../time-ago/time-ago'
 
 const SingleBlog = () => {
-  Protected()
 
   //GOT Blog ID From Url   
   const { id } = useParams();
@@ -26,7 +24,7 @@ const SingleBlog = () => {
   const getBlog = async() => {
     await axios({
       method : "POST",
-      url : `http://localhost:8080/api/v1/blog/${id}`,
+      url : `https://mernmedia-house.herokuapp.com/api/v1/blog/${id}`,
       headers : {
         "Content-Type" : "application/json",
         "x-access-token" : token
@@ -45,7 +43,7 @@ const SingleBlog = () => {
     dispatch(getSetLoaader(true))
     await axios({
       method : "GET",
-      url : "http://localhost:8080/api/v1/blog/allBlogs",
+      url : "https://mernmedia-house.herokuapp.com/api/v1/blog/allBlogs",
       headers : {
         "Content-Type" : "application/json",
         "x-access-token" : token
@@ -85,7 +83,7 @@ const SingleBlog = () => {
     if(blog?.blogInfo?.thieUserLiked !== true){
       await axios({
         method : "PUT",
-        url : "http://localhost:8080/api/v1/user/blog/like",
+        url : "https://mernmedia-house.herokuapp.com/api/v1/user/blog/like",
         headers : {
           "Content-Type" : "application/json",
           "x-access-token" : token
@@ -97,7 +95,7 @@ const SingleBlog = () => {
     }else{
       await axios({
         method : "PUT",
-        url : "http://localhost:8080/api/v1/user/blog/removeLike",
+        url : "https://mernmedia-house.herokuapp.com/api/v1/user/blog/removeLike",
         headers : {
           "Content-Type" : "application/json",
           "x-access-token" : token
@@ -116,7 +114,7 @@ const SingleBlog = () => {
     if(blog?.blogInfo?.thisUserSaved !== true){
       await axios({
         method : "PUT",
-        url : `http://localhost:8080/api/v1/user/blog/save/${id}`,
+        url : `https://mernmedia-house.herokuapp.com/api/v1/user/blog/save/${id}`,
         headers : {
           "Content-Type" : "application/json",
           "x-access-token" : token
@@ -128,7 +126,7 @@ const SingleBlog = () => {
     }else{
       await axios({
         method : "PUT",
-        url : `http://localhost:8080/api/v1/user/blog/unsave/${id}`,
+        url : `https://mernmedia-house.herokuapp.com/api/v1/user/blog/unsave/${id}`,
         headers : {
           "Content-Type" : "application/json",
           "x-access-token" : token

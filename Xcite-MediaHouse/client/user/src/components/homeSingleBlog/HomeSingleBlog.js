@@ -15,7 +15,7 @@ const HomeSingleBlog = ({login}) => {
     dispatch(getSetLoaader(true))
     await axios({
       method : "GET",
-      url : "http://localhost:8080/api/v1/blog/6latestBlogs",
+      url : "https://mernmedia-house.herokuapp.com/api/v1/blog/6latestBlogs",
       headers : {
         "Content-Type" : "application",
       }
@@ -42,7 +42,7 @@ const HomeSingleBlog = ({login}) => {
   useEffect(async() => {
     await axios({
         method : "GET",
-        url : `http://localhost:8080/api/v2/joun/search/${jounId}`,
+        url : `https://mernmedia-house.herokuapp.com/api/v2/joun/search/${jounId}`,
         headers : {
             "Content-Type" : "application/json"
         }
@@ -56,8 +56,6 @@ const HomeSingleBlog = ({login}) => {
 
   //get current Time&Date   
   const timeAndDate = getCurrentTime_Date(new Date());
-
-  console.log(jounName);
 
   return (
     <div className="lastestSingleBlog__container">

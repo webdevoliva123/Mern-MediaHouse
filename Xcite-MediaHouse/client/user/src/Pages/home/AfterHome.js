@@ -4,11 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import HomeLatestBlog from '../../components/homeLatestBlog/HomeLatestBlog';
 import HomeSingleBlog from '../../components/homeSingleBlog/HomeSingleBlog';
 import HomeTopBlogOfSection from '../../components/homeTopBlogOfSection/HomeTopBlogOfSection';
-import { Protected } from '../../protected/protected'
-import { getLatestBlogsOfWeb, getTopBusinessBlog, getTopEconomicBlog, getTopFiveBlog, getTopNewsBlog, getTopOthersBlog, getTopSociologyBlog, getTopTechBlog } from '../../redux/action/blogAction';
+import { getTopBusinessBlog, getTopEconomicBlog, getTopFiveBlog, getTopNewsBlog, getTopOthersBlog, getTopSociologyBlog, getTopTechBlog } from '../../redux/action/blogAction';
 const AfterHome = () => {
-  // Make This Page Protected
-  Protected();
 
       // 
       const dispatch = useDispatch();
@@ -19,7 +16,7 @@ const AfterHome = () => {
       const fiveLatestBlog = async() => {
         await axios({
             method : "GET",
-            url : "http://localhost:8080/api/v1/blog/6latestBlogs",
+            url : "https://mernmedia-house.herokuapp.com/api/v1/blog/6latestBlogs",
             headers : {
               "Content-Type" : "application",
             }
@@ -39,7 +36,7 @@ const AfterHome = () => {
       const getNewsBlog = async() => {
           await axios({
               method : "GET",
-              url : "http://localhost:8080/api/v1/blog/4latestNewsBlogs",
+              url : "https://mernmedia-house.herokuapp.com/api/v1/blog/4latestNewsBlogs",
               headers : {
                   "Content-Type" : "application/json"
               }
@@ -52,7 +49,7 @@ const AfterHome = () => {
       const getBusinessBlog = async() => {
         await axios({
             method : "GET",
-            url : "http://localhost:8080/api/v1/blog/4latestBusniessBlogs",
+            url : "https://mernmedia-house.herokuapp.com/api/v1/blog/4latestBusniessBlogs",
             headers : {
                 "Content-Type" : "application/json"
             }
@@ -65,7 +62,7 @@ const AfterHome = () => {
       const getSociologyBlog = async() => {
         await axios({
             method : "GET",
-            url : "http://localhost:8080/api/v1/blog/4latestSociologyBlogs",
+            url : "https://mernmedia-house.herokuapp.com/api/v1/blog/4latestSociologyBlogs",
             headers : {
                 "Content-Type" : "application/json"
             }
@@ -78,7 +75,7 @@ const AfterHome = () => {
       const getTechBlog = async() => {
         await axios({
             method : "GET",
-            url : "http://localhost:8080/api/v1/blog/4latestTechBlogs",
+            url : "https://mernmedia-house.herokuapp.com/api/v1/blog/4latestTechBlogs",
             headers : {
                 "Content-Type" : "application/json"
             }
@@ -91,7 +88,7 @@ const AfterHome = () => {
        const getEconomicBlog = async() => {
         await axios({
             method : "GET",
-            url : "http://localhost:8080/api/v1/blog/4latestEconomicBlogs",
+            url : "https://mernmedia-house.herokuapp.com/api/v1/blog/4latestEconomicBlogs",
             headers : {
                 "Content-Type" : "application/json"
             }
@@ -104,7 +101,7 @@ const AfterHome = () => {
        const getOthersBlog = async() => {
         await axios({
             method : "GET",
-            url : "http://localhost:8080/api/v1/blog/4latestOtherBlogs",
+            url : "https://mernmedia-house.herokuapp.com/api/v1/blog/4latestOtherBlogs",
             headers : {
                 "Content-Type" : "application/json"
             }

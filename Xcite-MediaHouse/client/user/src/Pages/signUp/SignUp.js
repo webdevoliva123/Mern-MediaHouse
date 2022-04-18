@@ -91,7 +91,7 @@ const SignUp = () => {
         // User Register API
         await axios({
           method : "POST",
-          url : "http://localhost:8080/api/v1/auth/register",
+          url : "https://mernmedia-house.herokuapp.com/api/v1/auth/register",
           headers : {
             "Content-Type" : "application/json"
           },

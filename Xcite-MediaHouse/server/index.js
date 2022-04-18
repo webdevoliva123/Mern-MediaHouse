@@ -47,9 +47,13 @@ app.use("/api/v3",adminRoutes);
 
 const PORT = process.env.PORT || 8080;
 
+app.get('/',(req,res) => {
+    res.send(`It Working 🍁 `)
+})
+
 // createing server
 app.listen(PORT, () => {
-    console.log(`XcitEdu Media Server is running on : http://localhost:${PORT} `);
+    console.log(`Server is Running🚀`);
     // Connecting to mongodb server
     connectDB();
 });

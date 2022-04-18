@@ -15,7 +15,7 @@ const BeforeHome = () => {
   const fiveLatestBlog = async() => {
     await axios({
         method : "GET",
-        url : "http://localhost:8080/api/v1/blog/6latestBlogs",
+        url : "https://mernmedia-house.herokuapp.com/api/v1/blog/6latestBlogs",
         headers : {
           "Content-Type" : "application",
         }
@@ -35,7 +35,7 @@ const BeforeHome = () => {
   const getNewsBlog = async() => {
       await axios({
           method : "GET",
-          url : "http://localhost:8080/api/v1/blog/4latestNewsBlogs",
+          url : "https://mernmedia-house.herokuapp.com/api/v1/blog/4latestNewsBlogs",
           headers : {
               "Content-Type" : "application/json"
           }
@@ -48,7 +48,7 @@ const BeforeHome = () => {
   const getBusinessBlog = async() => {
     await axios({
         method : "GET",
-        url : "http://localhost:8080/api/v1/blog/4latestBusniessBlogs",
+        url : "https://mernmedia-house.herokuapp.com/api/v1/blog/4latestBusniessBlogs",
         headers : {
             "Content-Type" : "application/json"
         }
@@ -61,7 +61,7 @@ const BeforeHome = () => {
   const getSociologyBlog = async() => {
     await axios({
         method : "GET",
-        url : "http://localhost:8080/api/v1/blog/4latestSociologyBlogs",
+        url : "https://mernmedia-house.herokuapp.com/api/v1/blog/4latestSociologyBlogs",
         headers : {
             "Content-Type" : "application/json"
         }
@@ -74,7 +74,7 @@ const BeforeHome = () => {
   const getTechBlog = async() => {
     await axios({
         method : "GET",
-        url : "http://localhost:8080/api/v1/blog/4latestTechBlogs",
+        url : "https://mernmedia-house.herokuapp.com/api/v1/blog/4latestTechBlogs",
         headers : {
             "Content-Type" : "application/json"
         }
@@ -87,7 +87,7 @@ const BeforeHome = () => {
    const getEconomicBlog = async() => {
     await axios({
         method : "GET",
-        url : "http://localhost:8080/api/v1/blog/4latestEconomicBlogs",
+        url : "https://mernmedia-house.herokuapp.com/api/v1/blog/4latestEconomicBlogs",
         headers : {
             "Content-Type" : "application/json"
         }
@@ -100,7 +100,7 @@ const BeforeHome = () => {
    const getOthersBlog = async() => {
     await axios({
         method : "GET",
-        url : "http://localhost:8080/api/v1/blog/4latestOtherBlogs",
+        url : "https://mernmedia-house.herokuapp.com/api/v1/blog/4latestOtherBlogs",
         headers : {
             "Content-Type" : "application/json"
         }
